@@ -1,0 +1,68 @@
+<h1>Lista de tallas:</h1>
+
+
+<div align="right">
+			<a
+				href='<?php
+				echo $this->url ( array (
+						'controller' => 'itemsize',
+						'action' => 'add' 
+				), 'default', true )?>'>
+					<img src="<?php echo $this->rootPath ?>images/add.png" title="AGREGAR" border="0"> AGREGAR
+			</a>
+</div>
+
+<table border="0" align="center" class="css-table-index">
+	<tr>
+		<th>Talla</th>
+		<th>Descripci&oacute;n</th>
+		<th colspan="3"></th>
+	</tr>
+
+	<?php
+	foreach ( $this->dataList as $itemSize ) {
+		?>
+	<tr>
+		<td><?php echo $itemSize->getName(); ?></td>
+		<td><?php echo $itemSize->getDescription(); ?></td>
+		<td>
+			<?php if($itemSize->getName() != "- Seleccionar -"){ ?>
+			<a
+				href='<?php		
+				echo $this->url ( array (
+								'controller' => 'itemsize',
+								'action' => 'view',
+								'id' => $itemSize->getId () 
+						), 'default', true )?>'><img src="<?php echo $this->rootPath ?>images/view.png" title="VER">
+			</a>
+			<?php } ?>
+		</td>
+		<td>
+			<?php if($itemSize->getName() != "- Seleccionar -"){ ?>
+			<a
+				href='<?php		
+				echo $this->url ( array (
+								'controller' => 'itemsize',
+								'action' => 'edit',
+								'id' => $itemSize->getId () 
+						), 'default', true )?>'><img src="<?php echo $this->rootPath ?>images/edit.png" title="EDITAR">
+			</a>
+			<?php } ?>
+		</td>
+		<td>
+			<?php if($itemSize->getName() != "- Seleccionar -"){ ?>
+			<a
+				href='<?php				
+				echo $this->url ( array (
+								'controller' => 'itemsize',
+								'action' => 'remove',
+								'id' => $itemSize->getId () 
+						), 'default', true )?>'><img src="<?php echo $this->rootPath ?>images/remove.png" title="BORRAR">
+			</a>
+			<?php } ?>
+		</td>
+	</tr>
+	<?php
+	}
+	?>	
+</table>

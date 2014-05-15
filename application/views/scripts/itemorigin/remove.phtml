@@ -1,0 +1,26 @@
+<h1>Borrar origen:</h1>
+
+<a href='<?php echo $this->url ( array (
+					'controller' => 'itemorigin',
+					'action' => 'index' 
+						), 'default', true )?>'>
+						<img src="<?php echo $this->rootPath ?>images/back.png" title="VOLVER AL LISTADO" border="0"> Volver al listado</a>
+<br/>
+
+<form action="" method="post" enctype="application/x-www-form-urlencoded">
+	<table border="0" align="center">
+	<tr>
+		<th align="right">Nombre:</th>		
+		<td><?php echo $this->itemOrigin->getName(); ?></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<input type="submit" id="submit" name="submit" value="BORRAR">
+		</td>
+	</tr>
+	</table>
+</form>
+
+<div align="center">
+	<?php echo $this->message; ?>
+</div>

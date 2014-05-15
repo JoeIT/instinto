@@ -1,0 +1,102 @@
+<h1>Borrar item:</h1>
+
+<a href='<?php echo $this->url ( array (
+					'controller' => 'item',
+					'action' => 'index' 
+						), 'default', true )?>'>
+						<img src="<?php echo $this->rootPath ?>images/back.png" title="VOLVER AL LISTADO" border="0"> Volver al listado</a>
+
+<br/>
+<form action="" method="post" enctype="application/x-www-form-urlencoded">
+	<table border="0" align="center">
+	<tr>
+		<th align="right">C&oacute;digo:</th>		
+		<td><?php echo $this->item->getCode(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Nuevo c&oacute;digo:</th>
+		<td><?php echo $this->item->getNewCode(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Tipo:</th>
+		<td><?php echo $this->item->getType()->getName(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Nombre:</th>
+		<td><?php echo $this->item->getName(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Marca:</th>
+		<td><?php echo $this->item->getBrand()->getName(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Material:</th>
+		<td><?php echo $this->item->getMaterial()->getName(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Color:</th>
+		<td><?php echo $this->item->getColor()->getName(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Procedencia:</th>
+		<td><?php echo $this->item->getOrigin()->getName(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Ubicaci&oacute;n:</th>
+		<td><?php echo $this->item->getLocation()->getName(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Propietario:</th>
+		<td><?php echo $this->item->getOwner()->getName(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Cantidad:</th>
+		<td><?php echo $this->item->getQuantity(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Costo unitario:</th>
+		<td><?php echo $this->item->getUnitCost(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Costo esperado:</th>
+		<td><?php echo $this->item->getExpectedCost(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Costo de venta:</th>
+		<td><?php echo $this->item->getSalesCost(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Estado:</th>
+		<td><?php echo $this->item->getCondition()->getName(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Disponibilidad:</th>
+		<td><?php echo $this->item->getAvailability()->getName(); ?></td>
+	</tr>
+	<tr>
+		<th align="right">Observaciones:</th>
+		<td><p><?php echo str_replace(chr(13), "<br/>", $this->item->getComment()); ?></p></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<input type="submit" id="submit" name="submit" value="BORRAR">
+		</td>
+	</tr>
+	</table>
+</form>
+
+<div align="center">
+	<?php echo $this->message; ?>
+</div>
+
+<div id="item_images" class="css-div-images">
+	<?php
+	$folder = $this->photosPath . $this->item->getPhotoDir() . '/';
+	$filetype = '*.*';
+	$files = glob($folder . $filetype);
+	
+	for ($i=0; $i<count($files); $i++) {
+		echo "<img src='" . $this->rootPath . "/" . $files[$i] . "' />";
+	}
+	?>
+</div>

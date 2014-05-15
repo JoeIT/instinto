@@ -1,0 +1,107 @@
+<?php
+$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8');
+$this->headTitle()->setSeparator(' - ');
+$this->headTitle('INSTINTO');
+
+echo $this->doctype();
+?>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<?php echo $this->headMeta(); ?>
+	<?php echo $this->headTitle(); ?>
+
+	<?php 
+    	echo $this->headLink()->prependStylesheet($this->baseUrl() . '/css/ui-lightness/jquery-ui-1.10.3.custom.min.css');
+    	echo $this->headLink()->prependStylesheet($this->baseUrl() . '/css/style.css');
+
+    	echo $this->headScript()->appendFile($this->baseUrl() . '/js/jquery-1.10.2.min.js','text/javascript');
+    	echo $this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui-1.10.3.custom.min.js','text/javascript');
+
+    	echo "<input type='hidden' id='SYSTEM_ROOT_PATH' value='http://$_SERVER[HTTP_HOST]" . $this->baseUrl() ."/'/>";
+	?>
+			
+<script type="text/javascript">
+$(document).ready(function() {
+	//alert('URL: ' + $('#SYSTEM_ROOT_PATH').val());
+	//alert('URL: ' + location.href);
+	//alert('URL: ' + window.location.pathname);
+	updateCurrentMenuBar();	
+});
+
+function updateCurrentMenuBar()
+{
+	var arrPath = window.location.pathname.split('/');
+	var controller = '';
+
+	for(var i=0; i < arrPath.length; i++)
+	{
+		if('public' == arrPath[i])
+		{
+			controller = arrPath[i + 1];
+			break;
+		}
+	}
+
+	$('#menu li a').removeClass('current');
+	$('#menu_' + controller).addClass('current');
+}
+		
+</script>
+</head>
+
+<body>
+		<div id="container">
+			<div id="before-header">
+				<div id="menu">
+					<ul>
+						<li>
+							<a href="<?php echo $this->baseUrl() . "/index"; ?>"  id="menu_index" class="current">Inicio</a>
+						</li>
+						<li>
+							<a href="javascript:void()" id="">VENTAS</a>
+						</li>
+						<li>
+							<a href="<?php echo $this->baseUrl(); ?>/item/index" id="menu_item">Items</a>
+						</li>
+						<li>
+							<a href="<?php echo $this->baseUrl(); ?>/itembrand/index" id="menu_itembrand">Marcas</a>
+						</li>
+						<li>
+							<a href="<?php echo $this->baseUrl(); ?>/itemtype/index" id="menu_itemtype">Tipos</a>
+						</li>
+						<li>
+							<a href="<?php echo $this->baseUrl(); ?>/itemcolor/index" id="menu_itemcolor">Colores</a>
+						</li>
+						<li>
+							<a href="<?php echo $this->baseUrl(); ?>/itemsize/index" id="menu_itemsize">Tallas</a>
+						</li>
+						<li>
+							<a href="<?php echo $this->baseUrl(); ?>/itemorigin/index" id="menu_itemorigin">Proveedores</a>
+						</li>
+					</ul>
+				</div>				
+			</div>
+			<div id="header">
+				<div id="main_logo">					
+				</div>
+				
+				<div id="announcements_board" class="announcements">
+				</div>
+
+			</div>
+			<!-- end of header -->
+
+			<div id="content">
+					<?php echo $this->layout()->content; ?>
+			</div>
+			<!-- end of content -->
+
+			<div id="footer">
+				<strong>Copyright © <?php echo date('Y') ?></strong>
+			</div>
+			<!-- end of footer -->
+		</div>
+		<!-- end of container -->
+	</body>
+</html>

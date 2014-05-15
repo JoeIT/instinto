@@ -1,0 +1,25 @@
+<h1>Origen:</h1>
+
+<a href='<?php echo $this->url ( array (
+					'controller' => 'itemorigin',
+					'action' => 'index' 
+						), 'default', true )?>'>
+						<img src="<?php echo $this->rootPath ?>images/back.png" title="VOLVER AL LISTADO" border="0"> Volver al listado</a>
+
+<br/>
+
+<table border="0" align="center">
+<tr>
+	<th align="right">Nombre:</th>		
+	<td><?php echo $this->item->getName(); ?></td>
+</tr>
+<tr>
+	<td align="center" colspan="2">
+		<a href='<?php echo $this->url ( array (
+					'controller' => 'itemorigin',
+					'action' => 'edit', 
+					'id' => $this->item->getId()
+						), 'default', true )?>'>EDITAR DATOS</a>
+	</td>
+</tr>
+</table>

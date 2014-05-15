@@ -1,0 +1,7 @@
+<select id='<?php echo $this->selectId; ?>' name='<?php echo $this->selectId; ?>'>
+	<?php foreach($this->options as $type) { ?>
+		<option value='<?php echo $type->getId(); ?>' <?php if($this->optionSelected == $type->getId()) echo "selected='selected'" ?> >
+			<?php echo $type->getName(); ?>
+		</option>		
+	<?php }?>
+</select>

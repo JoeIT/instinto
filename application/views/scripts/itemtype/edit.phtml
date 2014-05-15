@@ -1,0 +1,16 @@
+<h1>Editar tipo:</h1>
+
+<a href='<?php echo $this->url ( array (
+					'controller' => 'itemtype',
+					'action' => 'index' 
+						), 'default', true )?>'>
+						<img src="<?php echo $this->rootPath ?>images/back.png" title="VOLVER AL LISTADO" border="0"> Volver al listado</a>
+<br/>
+
+<div align="center">
+	<?php echo $this->form; ?>
+</div>
+
+<div align="center">
+	<?php echo $this->message; ?>
+</div>

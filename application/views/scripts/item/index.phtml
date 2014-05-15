@@ -1,0 +1,157 @@
+<script>
+$(document).ready(function () {
+
+	$('.search_component').change(function(){
+		var searchIndexBaseURL = $('#search_link').attr('indexURL') + '/index';
+		var exportBaseURL = $('#export_link').attr('indexURL');
+
+		var url = '';
+		$('.search_component').each(function(){
+			
+			var value = $.trim( $(this).val() );
+
+			if(! value.length == 0 )
+				url += '/' + $(this).attr('id') + '/' + value;
+		});
+
+		$('#search_link').attr('href', searchIndexBaseURL + url);
+		$('#export_link').attr('href', exportBaseURL + url);
+	});
+});
+</script>
+
+<h1>Lista items:</h1>
+<div align="right">
+			<a
+				href='<?php
+				echo $this->url ( array (
+						'controller' => 'item',
+						'action' => 'add' 
+				), 'default', true )?>'>
+					<img src="<?php echo $this->rootPath ?>images/add.png" title="AGREGAR" border="0"> AGREGAR
+			</a>
+
+			<br/>
+			<b>Total items registrados: <?php echo $this->totalItems;?> </b>
+</div>
+
+<div id='content_left'>
+	<table class='css-table-search' align='center'>
+		<tr>
+			<th colspan='2'>BUSCADOR</th>
+		<tr>
+			<th>Marca</th>
+			<td><?php echo $this->brandSelect; ?></td>
+		</tr>
+		</tr>
+			<th>Tipo</th>
+			<td><?php echo $this->typeSelect; ?></td>
+		</tr>
+		<tr>
+			<th>Talla</th>
+			<td><?php echo $this->sizeSelect; ?></td>
+		</tr>
+		<tr>
+			<th>Color</th>
+			<td><?php echo $this->colorSelect; ?></td>
+		</tr>
+		<tr>
+			<th>Proveedor</th>
+			<td><?php echo $this->originSelect; ?></td>
+		</tr>
+		<tr>
+			<th>C&oacute;digo</th>
+			<td><input type='text' id='code' name='code' class='search_component' value='<?php echo $this->code;?>'/></td>
+		</tr>
+		<tr>
+		<tr>
+			<td colspan='2' align='center'>
+			<?php
+				$indexURL = $this->url ( array ('controller' => 'item', 'action' => 'index'), 'default', true );
+			?>
+				<a id='search_link' 
+					href='<?php echo $indexURL . '/index' . $this->extraSearchURL;?>' 
+					indexURL ='<?php echo $indexURL;?>'>
+						<img src="<?php echo $this->rootPath ?>images/search.png" title="BUSCAR" border="0"> BUSCAR
+				</a>
+			</td>			
+		</tr>
+		<tr>
+			<td colspan='2' align='center'>
+				<a id='export_link'  
+				href='<?php echo $this->url ( array ('controller' => 'item', 'action' => 'toxlsx'), 'default', true ) . $this->extraSearchURL; ?>' 
+				indexURL = '<?php echo $this->url ( array ('controller' => 'item', 'action' => 'toxlsx'), 'default', true ); ?>'
+				>EXPORTAR A EXCEL</a>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<table border="0" align="center" class="css-table-item-index" >
+	<tr>
+		<th>C&oacute;digo</th>
+		<th>Marca</th>
+		<th>Tipo</th>
+		<th>Talla</th>
+		<th>Color</th>
+		<th>Precio.</th>
+		<th>Precio final</th>
+		<th>Procedencia</th>
+		<th>Costo</th>
+		<th colspan="3"></th>
+	</tr>
+
+	<?php
+	foreach ( $this->dataList as $item ) {
+		?>
+	<tr title="<?php echo $item->getDescription(); ?>">
+		<td><?php echo $item->getCode(); ?></td>
+		<td><?php echo $item->getBrand()->getName(); ?></td>
+		<td><?php echo $item->getType()->getName(); ?></td>
+		<td><?php echo $item->getSize()->getSize(); ?></td>
+		<td><?php echo $item->getColor()->getName(); ?></td>
+		<td align='right'><?php echo $item->getPrice(); ?></td>
+		<td align='right'><?php echo $item->getFinalPrice(); ?></td>
+		<td><?php echo $item->getOrigin()->getName(); ?></td>
+		<td align='right'><?php echo $item->getCost(); ?></td>
+		
+		<td>
+			<a
+				href='<?php		
+				echo $this->url ( array (
+								'controller' => 'item',
+								'action' => 'view',
+								'id' => $item->getId () 
+						), 'default', true )?>'><img src="<?php echo $this->rootPath ?>images/view.png" title="VER">
+			</a>
+		</td>
+		<td>
+			<a
+				href='<?php		
+				echo $this->url ( array (
+								'controller' => 'item',
+								'action' => 'edit',
+								'id' => $item->getId () 
+						), 'default', true )?>'><img src="<?php echo $this->rootPath ?>images/edit.png" title="EDITAR">
+			</a>
+		</td>
+		<td>
+			<a
+				href='<?php				
+				echo $this->url ( array (
+								'controller' => 'item',
+								'action' => 'remove',
+								'id' => $item->getId () 
+						), 'default', true )?>'><img src="<?php echo $this->rootPath ?>images/remove.png" title="BORRAR">
+			</a>
+		</td>
+	</tr>
+	<?php
+	}
+	?>	
+</table>
+
+<div align="center" class="paginator_field">
+			<?php echo $this->htmlPaginator; ?>
+</div>
+
