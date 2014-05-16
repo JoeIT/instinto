@@ -108,15 +108,12 @@ class ItemController extends Zend_Controller_Action {
 				$item->setOrigin		( $this->_itemOriginDao->getById($formData['origin_select']) );
 				$item->setQuantity		( $formData['quantity'] );
 				$item->setPrice			( $formData['price'] );
-				$item->setFinalPrice	( $formData['final_price'] );
+				$item->setFinalPrice	( $formData['finalPrice'] );
 				$item->setCost			( $formData['cost'] );
 				$item->setDescription	( $formData['description'] );
 				$item->setCreationDate	( date_create(date('Y-m-d H:m:s')) );
 				
 				$photoUrl = $item->getCode();
-				
-				if( !empty( $item->getNewCode() ) )
-					$photoUrl = $item->getNewCode();
 				
 				$item->setPhotoDir($photoUrl);
 				

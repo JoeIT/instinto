@@ -10,76 +10,48 @@
 
 <table border="0" align="center">
 <tr>
-	<th align="right">C&oacute;digo:</th>		
-	<td><?php echo $this->item->getCode(); ?></td>
-</tr>
-<tr>
-	<th align="right">Nuevo c&oacute;digo:</th>
-	<td><?php echo $this->item->getNewCode(); ?></td>
-</tr>
-<tr>
-	<th align="right">C&oacute;digo contable:</th>
-	<td><?php echo $this->item->getAccountingCode(); ?></td>
-</tr>
-<tr>
 	<th align="right">Tipo:</th>
 	<td><?php echo $this->item->getType()->getName(); ?></td>
 </tr>
 <tr>
-	<th align="right">Nombre:</th>
-	<td><?php echo $this->item->getName(); ?></td>
+	<th align="right">Talla:</th>
+	<td><?php echo $this->item->getSize()->getName(); ?></td>
 </tr>
 <tr>
 	<th align="right">Marca:</th>
 	<td><?php echo $this->item->getBrand()->getName(); ?></td>
 </tr>
 <tr>
-	<th align="right">Material:</th>
-	<td><?php echo $this->item->getMaterial()->getName(); ?></td>
-</tr>
-<tr>
 	<th align="right">Color:</th>
 	<td><?php echo $this->item->getColor()->getName(); ?></td>
-</tr>
-<tr>
-	<th align="right">Procedencia:</th>
-	<td><?php echo $this->item->getOrigin()->getName(); ?></td>
-</tr>
-<tr>
-	<th align="right">Ubicaci&oacute;n:</th>
-	<td><?php echo $this->item->getLocation()->getName(); ?></td>
-</tr>
-<tr>
-	<th align="right">Propietario:</th>
-	<td><?php echo $this->item->getOwner()->getName(); ?></td>
 </tr>
 <tr>
 	<th align="right">Cantidad:</th>
 	<td><?php echo $this->item->getQuantity(); ?></td>
 </tr>
 <tr>
-	<th align="right">Costo unitario:</th>
-	<td><?php echo $this->item->getUnitCost(); ?></td>
+	<th align="right">Precio:</th>
+	<td><?php echo $this->item->getPrice(); ?></td>
 </tr>
 <tr>
-	<th align="right">Costo esperado:</th>
-	<td><?php echo $this->item->getExpectedCost(); ?></td>
+	<th align="right">Precio final:</th>
+	<td><?php echo $this->item->getFinalPrice(); ?></td>
+</tr>
+<tr>
+	<th align="right">Descripci&oacute;n:</th>
+	<td><p><?php echo str_replace(chr(13), "<br/>", $this->item->getDescription()); ?></p></td>
+</tr>
+<tr>
+	<th align="right">Procedencia:</th>
+	<td><?php echo $this->item->getOrigin()->getName(); ?></td>
+</tr>
+<tr>
+	<th align="right">C&oacute;digo:</th>		
+	<td><?php echo $this->item->getCode(); ?></td>
 </tr>
 <tr>
 	<th align="right">Costo de venta:</th>
-	<td><?php echo $this->item->getSalesCost(); ?></td>
-</tr>
-<tr>
-	<th align="right">Estado:</th>
-	<td><?php echo $this->item->getCondition()->getName(); ?></td>
-</tr>
-<tr>
-	<th align="right">Disponibilidad:</th>
-	<td><?php echo $this->item->getAvailability()->getName(); ?></td>
-</tr>
-<tr>
-	<th align="right">Observaciones:</th>
-	<td><p><?php echo str_replace(chr(13), "<br/>", $this->item->getComment()); ?></p></td>
+	<td><?php echo $this->item->getCost(); ?></td>
 </tr>
 <tr>
 	<td align="center" colspan="2">
