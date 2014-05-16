@@ -66,7 +66,7 @@ class App_Dao_ItemDao {
 		if( !empty($type) )
 			$this->_where .= " AND i.type = '$type' ";
 		if( !empty($size) )
-			$this->_where .= " AND i.size LIKE '$size%' ";
+			$this->_where .= " AND i.size = '$size' ";
 		if( !empty($color) )
 			$this->_where .= " AND i.color = '$color' ";
 		if( !empty($origin) )
@@ -75,7 +75,7 @@ class App_Dao_ItemDao {
 			$this->_where .= " AND i.code LIKE '$code%' ";
 		
 		if( !empty($this->_where) )
-			$this->_where = ' WHERE ' . substr($this->_where, 4);		
+			$this->_where = ' WHERE ' . substr($this->_where, 4); // The substring is required to eliminate de first AND	
 	}
 	
 	// ----------------------------------------------------------------

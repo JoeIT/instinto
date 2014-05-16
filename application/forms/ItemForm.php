@@ -36,14 +36,14 @@ class App_Form_ItemForm extends Zend_Form
 		$quantity->setAttrib('class', 'css-input_number_form');
 		
 		$price = new Zend_Form_Element_Text('price');
-		$price->setLabel("Precio:");
+		$price->setLabel("Precio unid.:");
 		$price->addValidator( new Zend_Validate_Float() );
 		$price->setValue("0.00");
 		$price->setRequired(false);
 		$price->setAttrib('class', 'css-input_number_form');
 		
 		$finalPrice = new Zend_Form_Element_Text('finalPrice');
-		$finalPrice->setLabel("Precio final:");
+		$finalPrice->setLabel("Precio final unid.:");
 		$finalPrice->addValidator( new Zend_Validate_Float() );
 		$finalPrice->setValue("0.00");
 		$finalPrice->setRequired(false);

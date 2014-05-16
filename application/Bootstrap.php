@@ -32,6 +32,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->_resourceLoader->addResourceType('util', 'utils/', 'Util');
 		$this->_resourceLoader->addResourceType('form_validators', 'form_validators/', 'CustomZendValidator');
 		$this->_resourceLoader->addResourceType('form_decorators', 'form_decorators/', 'CustomDecorator');
+		
+		/*
+		$locale = new Zend_Locale();
+		
+		// Return all default locales
+		$found = $locale->getDefault();
+		print_r($found);
+		*/
     }
     
     protected function _initMessageTranslator()

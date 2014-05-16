@@ -166,12 +166,11 @@ class ItemController extends Zend_Controller_Action {
 		
 				$newPhotoUrl = "";
 				
-				if( !empty($lastNewCode) || $lastCode != $item->getCode() )
+				if( $lastCode != $item->getCode() )
 					$newPhotoUrl = $item->getCode();
 				
-				
-				if( !empty( $newPhotoUrl ) ) {
-					if( rename( self::PHOTO_ROOT_URL . $item->getPhotoDir(), self::PHOTO_ROOT_URL . $newPhotoUrl) )
+				if( !empty( $newPhotoUrl ) && !empty( $lastCode ) ) {
+					if( rename( self::PHOTO_ROOT_URL . $lastCode, self::PHOTO_ROOT_URL . $newPhotoUrl) )
 					{
 						$item->setPhotoDir( $newPhotoUrl );
 						$this->_itemDao->save($item);
@@ -180,6 +179,17 @@ class ItemController extends Zend_Controller_Action {
 					}
 					else
 						$this->view->message = "Error al renombrar directorio de fotografias.";
+				}
+				else if( !empty( $newPhotoUrl ) && empty( $lastCode ) ) {
+					$dirPermission = "0777";
+					if( mkdir( self::PHOTO_ROOT_URL . $newPhotoUrl, $dirPermission) )
+					{
+						$this->_itemDao->save($item);
+						$this->_helper->redirector('index');
+						return;
+					}
+					else
+						$this->view->message = "Error al crear directorio de fotografias.";
 				}
 				else {
 					$this->_itemDao->save($item);
