@@ -8,7 +8,7 @@ class App_Util_XlsxGenerator
 {
 	private $objPHPExcel = null;
 	private $row = 1;
-	private $documentName = 'Administracion de activos fijos';
+	private $documentName = 'Listado';
 	
 	private $rowLimiter = '@';
 	private $colLimiter = '|';
@@ -50,25 +50,17 @@ class App_Util_XlsxGenerator
 		$this->addRow(array($this->documentName), true);
 		
 		
-		$headersTable = array('Codigo', 
-							'Nuevo codigo',
-							'codigo contable',
-							'Tipo',
-							'Nombre',
+		$headersTable = array('Tipo',
 							'Marca',
-							'Material',
+							'Talla',
 							'Color',
-							'Procedencia',
-							'Ubicacion',
-							'Propietario',
 							'Cantidad',
-							'Costo unitario',
-							'Costo minimo',
-							'Costo esperado',
-							'Costo de venta',
-							'Estado',
-							'Disponibilidad',
-							'Observaciones');
+							'Precio',
+							'Precio final',
+							'Descripcion',
+							'Proveedor',
+							'Codigo',
+							'Costo');
 		
 		// Adding data row
 		$this->addRow( $headersTable, true );

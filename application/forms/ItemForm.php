@@ -10,7 +10,6 @@ class App_Form_ItemForm extends Zend_Form
 		
 		//$this->setElementDecorators(array(new App_CustomDecorator_InputData()) );
 		//$id = new Zend_Form_Element_Hidden('id');
-				
 		
 		$type = new Zend_Form_Element_Select('type_select');
 		//$type->addMultiOptions($this->typeArray);

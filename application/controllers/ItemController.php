@@ -118,7 +118,7 @@ class ItemController extends Zend_Controller_Action {
 				$item->setPhotoDir($photoUrl);
 				
 				$dirPermission = "0777";
-				if( mkdir( self::PHOTO_ROOT_URL .  $photoUrl, $dirPermission) )
+				if( mkdir( self::PHOTO_ROOT_URL . $photoUrl, $dirPermission) )
 				{
 					$this->_itemDao->save($item);
 					$this->_helper->redirector('index');
@@ -131,7 +131,6 @@ class ItemController extends Zend_Controller_Action {
 		$this->view->form = $form;
 	}
 	
-	/*
 	public function editAction() {
 		$id = $this->_getParam('id', '');
 		if (empty($id))
@@ -151,39 +150,25 @@ class ItemController extends Zend_Controller_Action {
 			if ($form->isValid($formData)) {
 				
 				$lastCode = $item->getCode();
-				$lastNewCode = $item->getNewCode();
 				
 				$item->setCode			( $formData['code'] );
-				$item->setNewCode		( $formData['newCode'] );
-				$item->setAccountingCode( $formData['accountingCode'] );
-				$item->setType			( $this->_itemTypeDao->getById($formData['type_select']) );
-				$item->setName			( $formData['name'] );
 				$item->setBrand			( $this->_itemBrandDao->getById($formData['brand_select']) );
-				$item->setMaterial		( $this->_itemMaterialDao->getById($formData['material_select']) );
+				$item->setType			( $this->_itemTypeDao->getById($formData['type_select']) );
 				$item->setColor			( $this->_itemColorDao->getById($formData['color_select']) );
+				$item->setSize			( $this->_itemSizeDao->getById($formData['size_select']) );
 				$item->setOrigin		( $this->_itemOriginDao->getById($formData['origin_select']) );
-				$item->setColor		( $this->_itemColorDao->getById($formData['color_select']) );
-				$item->setOwner			( $this->_itemOwnerDao->getById($formData['owner_select']) );
 				$item->setQuantity		( $formData['quantity'] );
-				$item->setUnitCost		( $formData['unitCost'] );
-				$item->setMinimumCost	( $formData['minimumCost'] );
-				$item->setExpectedCost	( $formData['expectedCost'] );
-				$item->setSalesCost		( $formData['salesCost'] );
-				$item->setCondition		( $this->_itemConditionDao->getById($formData['condition_select']) );
-				$item->setAvailability	( $this->_itemAvailabilityDao->getById($formData['availability_select']) );
-				$item->setComment		( $formData['comment'] );
+				$item->setPrice			( $formData['price'] );
+				$item->setFinalPrice	( $formData['finalPrice'] );
+				$item->setCost			( $formData['cost'] );
+				$item->setDescription	( $formData['description'] );
 				$item->setModifiedDate	( date_create(date('Y-m-d H:m:s')) );
 		
 				$newPhotoUrl = "";
 				
-				if( !empty($item->getNewCode()) ) {
-					if( $lastNewCode != $item->getNewCode() ) 
-						$newPhotoUrl = $item->getNewCode();
-				}					
-				else {
-					if( !empty($lastNewCode) || $lastCode != $item->getCode() )
-						$newPhotoUrl = $item->getCode();
-				}
+				if( !empty($lastNewCode) || $lastCode != $item->getCode() )
+					$newPhotoUrl = $item->getCode();
+				
 				
 				if( !empty( $newPhotoUrl ) ) {
 					if( rename( self::PHOTO_ROOT_URL . $item->getPhotoDir(), self::PHOTO_ROOT_URL . $newPhotoUrl) )
@@ -216,13 +201,9 @@ class ItemController extends Zend_Controller_Action {
 			// 
 			$form->type_select->		setValue( $item->getType()->getId() );
 			$form->brand_select->		setValue( $item->getBrand()->getId() );
-			$form->material_select->	setValue( $item->getMaterial()->getId() );
+			$form->size_select->		setValue( $item->getSize()->getId() );
 			$form->color_select->		setValue( $item->getColor()->getId() );
 			$form->origin_select->		setValue( $item->getOrigin()->getId() );
-			$form->color_select->	setValue( $item->getColor()->getId() );
-			$form->owner_select->		setValue( $item->getOwner()->getId() );
-			$form->condition_select->	setValue( $item->getCondition()->getId() );
-			$form->availability_select->setValue( $item->getAvailability()->getId() );
 		}
 		
 		$this->view->item = $item;
@@ -250,20 +231,20 @@ class ItemController extends Zend_Controller_Action {
 			$this->_itemDao->remove($item);
 			$this->_helper->redirector('index');
 			return;
-		}		
+		}
 	}
 	
 	public function toxlsxAction() {
 		$this->_helper->layout->disableLayout();
 		
-		$name 				= $this->_getParam ( 'name', '' );
 		$code 				= $this->_getParam ( 'code', '' );
 		$typeSelected 		= $this->_getParam ( 'type', '' );
 		$brandSelected 		= $this->_getParam ( 'brand', '' );
 		$originSelected		= $this->_getParam ( 'origin', '' );
-		$colorSelected	= $this->_getParam ( 'color', '' );
+		$colorSelected		= $this->_getParam ( 'color', '' );
+		$sizeSelected		= $this->_getParam ( 'size', '' );
 		
-		$this->_itemDao->createSearchWhere($name, $code, $typeSelected, $brandSelected, $originSelected, $colorSelected);
+		$this->_itemDao->createSearchWhere($brandSelected, $typeSelected, $sizeSelected, $colorSelected, $originSelected, $code);
 		
 		$excel = new App_Util_XlsxGenerator();
 		$items = $this->_itemDao->getSearchLimitOffset(99999, 0);
@@ -271,25 +252,17 @@ class ItemController extends Zend_Controller_Action {
 		foreach($items as $item)
 		{
 			$dataArray = array(
-					$item->getCode(), 
-					$item->getNewCode(),
-					$item->getAccountingCode(),
 					$item->getType()->getName(),
-					$item->getName(),
 					$item->getBrand()->getName(),
-					$item->getMaterial()->getName(),
+					$item->getSize()->getName(),
 					$item->getColor()->getName(),
-					$item->getOrigin()->getName(),
-					$item->getColor()->getName(),
-					$item->getOwner()->getName(),
 					$item->getQuantity(),
-					$item->getUnitCost(),
-					$item->getMinimumCost(),
-					$item->getExpectedCost(),
-					$item->getSalesCost(),
-					$item->getCondition()->getName(),
-					$item->getAvailability()->getName(),
-					$item->getComment()
+					$item->getPrice(),
+					$item->getFinalPrice(),
+					$item->getDescription(),
+					$item->getOrigin()->getName(),
+					$item->getCode(),
+					$item->getCost()
 			);
 			
 			$excel->addRow($dataArray, false);
@@ -297,7 +270,7 @@ class ItemController extends Zend_Controller_Action {
 		
 		$excel->saveDocument();
 	}
-	*/
+	
 	public function ajaxrefreshselectelementAction() {
 		$this->_helper->layout->disableLayout();
 		
