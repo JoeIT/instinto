@@ -113,6 +113,9 @@ class ItemController extends Zend_Controller_Action {
 				$item->setDescription	( $formData['description'] );
 				$item->setCreationDate	( date_create(date('Y-m-d H:m:s')) );
 				
+				echo "</br>LLega: " . $formData['auxiliar'];
+				
+				/*
 				$photoUrl = $item->getCode();
 				
 				$item->setPhotoDir($photoUrl);
@@ -126,6 +129,7 @@ class ItemController extends Zend_Controller_Action {
 				}
 				else
 					$this->view->message = "Error al crear directorio de fotografias.";
+				*/
 			}
 		}
 		$this->view->form = $form;

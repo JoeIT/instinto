@@ -9,7 +9,50 @@ $(document).ready(function() {
 	$('input,select').change(function(){
 		$(this).addClass('noEditedYet');
 	});
+	
+	var table = getTable();
+	
+	$("tbody").prepend(table);
+	
+	$('#add_features').click(function(){
+		$('#features_list').append( getFeatureRow() );
+	});
+	
+	$(document).on('click', "input.delete_features", function () {
+		$('#row_' + $(this).attr('row')).remove();
+	});
 });
+
+
+
+function getTable()
+{
+	return "<tr><td colspan='10'><table id='features_list'>" +
+	"	<tr><td>" +
+	"		<input type='button' id='add_features' value='Agregar'/>" +
+	"	</td></tr>" +
+	"	<tr><th>COLOR</th><th>TALLA</th><th>CANTIDAD</th><th></th></tr>" +
+			getFeatureRow() +	
+	"</table></td></tr>";
+}
+
+var featureRowIndex = 0;
+function getFeatureRow()
+{
+	var cols = 
+	"<tr id='row_"+ featureRowIndex +"'>" +
+		"<td><input type='text' name='auxiliar' id='auxiliar' value='"+ featureRowIndex +"'/></td>" +
+		"<td><input type='text' name='auxiliar' id='auxiliar' value='This is Sparta!!'/></td>" +
+		"<td><input type='text' name='auxiliar' id='auxiliar' value='This is Sparta!!'/></td>" +
+		"<td><input type='button' class='delete_features' row='" + featureRowIndex + "' value='Borrar'/></td>" +
+	"</tr>";
+	
+	featureRowIndex++;
+	
+	return cols;
+}
+
+//<tr><td><input type='text' name='auxiliar' id='auxiliar' value='This data arrive!!'/></td></tr>
 </script>
 
 <style>
