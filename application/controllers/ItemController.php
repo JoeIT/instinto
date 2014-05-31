@@ -103,8 +103,8 @@ class ItemController extends Zend_Controller_Action {
 				$item->setCode			( $formData['code'] );
 				$item->setBrand			( $this->_itemBrandDao->getById($formData['brand_select']) );
 				$item->setType			( $this->_itemTypeDao->getById($formData['type_select']) );
-				$item->setColor			( $this->_itemColorDao->getById($formData['color_select']) );
-				$item->setSize			( $this->_itemSizeDao->getById($formData['size_select']) );
+				//$item->setColor			( $this->_itemColorDao->getById($formData['color_select']) );
+				//$item->setSize			( $this->_itemSizeDao->getById($formData['size_select']) );
 				$item->setOrigin		( $this->_itemOriginDao->getById($formData['origin_select']) );
 				$item->setQuantity		( $formData['quantity'] );
 				$item->setPrice			( $formData['price'] );
@@ -113,7 +113,18 @@ class ItemController extends Zend_Controller_Action {
 				$item->setDescription	( $formData['description'] );
 				$item->setCreationDate	( date_create(date('Y-m-d H:m:s')) );
 				
-				echo "</br>LLega: " . $formData['auxiliar'];
+				//echo "</br>LLega: " . $formData['detail_rows_number'];
+				for($index = 0; $index < $formData['detail_rows_number']; $index++)
+				{
+					if(isset( $formData['color_' . $index] ))
+						echo $formData['color_' . $index];
+					if(isset( $formData['size_' . $index] ))
+						echo $formData['size_' . $index];
+					if(isset( $formData['quantity_' . $index] ))
+						echo $formData['quantity_' . $index];
+						
+					echo '</br></br>';
+				}
 				
 				/*
 				$photoUrl = $item->getCode();
@@ -328,9 +339,12 @@ class ItemController extends Zend_Controller_Action {
 		$this->_helper->layout->disableLayout();
 		
 		$this->view->rowNumber = $this->_getParam('rowNumber', '');
+		$sizeSelected = $this->_getParam('sizeSelected', '');
+		$colorSelected = $this->_getParam('colorSelected', '');
 		
-		$this->view->sizeSelect		= $this->_buildSelectFromArray( 'size', $this->_itemSizeDao->getAll(), '', 'search_component');
-		$this->view->colorSelect	= $this->_buildSelectFromArray( 'color', $this->_itemColorDao->getAll(), '', 'search_component');
+		
+		$this->view->sizeSelect		= $this->_buildSelectFromArray( 'size_'.$this->_getParam('rowNumber', '0'), $this->_itemSizeDao->getAll(), $sizeSelected, '');
+		$this->view->colorSelect	= $this->_buildSelectFromArray( 'color_'.$this->_getParam('rowNumber', '0'), $this->_itemColorDao->getAll(), $colorSelected, '');
 	}
 	
 	private function _loadFormSelects(&$form) {

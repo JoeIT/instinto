@@ -5,7 +5,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('input,select').removeClass('noEditedYet');
-	
+
 	$('input,select').change(function(){
 		$(this).addClass('noEditedYet');
 	});
@@ -30,12 +30,12 @@ $(document).ready(function() {
 	});
 });
 
-
 function addDetailsRow()
 {
 	var rootPath = $('#SYSTEM_ROOT_PATH').val();
 
 	var detailRowIndex = $('#detail_rows_number').val();
+	$('#detail_rows_number').val( Number(detailRowIndex) + 1 );
 
 	$.ajax({
         url: rootPath + "item/ajaxloaddetails",
@@ -45,14 +45,15 @@ function addDetailsRow()
         success: function(response)
 		{
         	$('#features_list').append( response );
-        	$('#detail_rows_number').val( detailRowIndex++ );
         },
         error: function(request, textStatus, errorThrown)
 		{
             var message = (request.status == 403) ? request.responseText : message;
             alert("Error retrieving select data - " + message);
         }
-    });	
+    });
+
+	
 }
 
 
