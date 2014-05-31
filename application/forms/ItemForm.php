@@ -20,14 +20,6 @@ class App_Form_ItemForm extends Zend_Form
 		$brand->setLabel("Marca:");
 		$brand->setRequired(false);
 		
-		$size = new Zend_Form_Element_Select('size_select');
-		$size->setLabel("Talla:");
-		$size->setRequired(false);
-		
-		$color = new Zend_Form_Element_Select('color_select');
-		$color->setLabel("Color:");
-		$color->setRequired(false);
-		
 		$quantity = new Zend_Form_Element_Text('quantity');
 		$quantity->setLabel("Cantidad:");
 		$quantity->addValidator( new Zend_Validate_Float() );
@@ -72,21 +64,23 @@ class App_Form_ItemForm extends Zend_Form
 		$description->setAttrib("cols", "40");
 		$description->setAttrib("rows", "8");
 		
+		$detailRowsNumber = new Zend_Form_Element_Hidden('detail_rows_number');
+		$detailRowsNumber->setValue("0");
+		
 		$submit = new Zend_Form_Element_Submit('submit', array('label' => 'GUARDAR'));
 		
 		$this->addElements(array(
 				//$id, 
-				$type, 
-				$brand, 
-				$size, 
-				$color, 
+				$type,
+				$code,
+				$brand,
+				$cost,
 				$quantity, 
 				$price, 
 				$finalPrice, 
 				$description, 
 				$origin, 
-				$code, 
-				$cost, 
+				$detailRowsNumber, 
 				$submit));
 		
 		$this->setDecorators(array(

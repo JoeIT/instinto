@@ -10,12 +10,19 @@ $(document).ready(function() {
 		$(this).addClass('noEditedYet');
 	});
 	
-	var table = getTable();
+	var table = "<tr><td colspan='10'><table id='features_list' align='center'>" +
+			"	<tr><td>" +
+			"		<input type='button' id='add_features' value='Agregar'/>" +
+			"	</td></tr>" +
+			"	<tr><th>COLOR</th><th>TALLA</th><th>CANTIDAD</th><th></th></tr>" +
+			"</table></td></tr>";
 	
 	$("tbody").prepend(table);
+
+	addDetailsRow();
 	
 	$('#add_features').click(function(){
-		$('#features_list').append( getFeatureRow() );
+		addDetailsRow();
 	});
 	
 	$(document).on('click', "input.delete_features", function () {
@@ -24,33 +31,30 @@ $(document).ready(function() {
 });
 
 
-
-function getTable()
+function addDetailsRow()
 {
-	return "<tr><td colspan='10'><table id='features_list'>" +
-	"	<tr><td>" +
-	"		<input type='button' id='add_features' value='Agregar'/>" +
-	"	</td></tr>" +
-	"	<tr><th>COLOR</th><th>TALLA</th><th>CANTIDAD</th><th></th></tr>" +
-			getFeatureRow() +	
-	"</table></td></tr>";
+	var rootPath = $('#SYSTEM_ROOT_PATH').val();
+
+	var detailRowIndex = $('#detail_rows_number').val();
+
+	$.ajax({
+        url: rootPath + "item/ajaxloaddetails",
+        type: 'POST',
+		data: { rowNumber: detailRowIndex
+				},
+        success: function(response)
+		{
+        	$('#features_list').append( response );
+        	$('#detail_rows_number').val( detailRowIndex++ );
+        },
+        error: function(request, textStatus, errorThrown)
+		{
+            var message = (request.status == 403) ? request.responseText : message;
+            alert("Error retrieving select data - " + message);
+        }
+    });	
 }
 
-var featureRowIndex = 0;
-function getFeatureRow()
-{
-	var cols = 
-	"<tr id='row_"+ featureRowIndex +"'>" +
-		"<td><input type='text' name='auxiliar' id='auxiliar' value='"+ featureRowIndex +"'/></td>" +
-		"<td><input type='text' name='auxiliar' id='auxiliar' value='This is Sparta!!'/></td>" +
-		"<td><input type='text' name='auxiliar' id='auxiliar' value='This is Sparta!!'/></td>" +
-		"<td><input type='button' class='delete_features' row='" + featureRowIndex + "' value='Borrar'/></td>" +
-	"</tr>";
-	
-	featureRowIndex++;
-	
-	return cols;
-}
 
 //<tr><td><input type='text' name='auxiliar' id='auxiliar' value='This data arrive!!'/></td></tr>
 </script>
