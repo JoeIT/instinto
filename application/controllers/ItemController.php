@@ -94,6 +94,8 @@ class ItemController extends Zend_Controller_Action {
 		
 		$this->_loadFormSelects($form);
 		
+		$detailsArray = array();
+		
 		if ($this->_request->getPost()) {
 			$formData = $this->_request->getPost();
 		
@@ -113,18 +115,25 @@ class ItemController extends Zend_Controller_Action {
 				$item->setDescription	( $formData['description'] );
 				$item->setCreationDate	( date_create(date('Y-m-d H:m:s')) );
 				
-				//echo "</br>LLega: " . $formData['detail_rows_number'];
-				for($index = 0; $index < $formData['detail_rows_number']; $index++)
+				$index = 0;
+				for(; $index < $formData['detail_rows_number']; $index++)
 				{
 					if(isset( $formData['color_' . $index] ))
+					{
 						echo $formData['color_' . $index];
-					if(isset( $formData['size_' . $index] ))
+					//if(isset( $formData['size_' . $index] ))
 						echo $formData['size_' . $index];
-					if(isset( $formData['quantity_' . $index] ))
+					//if(isset( $formData['quantity_' . $index] ))
 						echo $formData['quantity_' . $index];
+						
+						array_push($detailsArray, array($formData['color_' . $index], $formData['size_' . $index], $formData['quantity_' . $index]));
+					}
 						
 					echo '</br></br>';
 				}
+				
+				$this->view->index = $index;
+				
 				
 				/*
 				$photoUrl = $item->getCode();
@@ -144,6 +153,7 @@ class ItemController extends Zend_Controller_Action {
 			}
 		}
 		$this->view->form = $form;
+		$this->view->detailsArray = $detailsArray;
 	}
 	
 	public function editAction() {

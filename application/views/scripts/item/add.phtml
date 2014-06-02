@@ -10,12 +10,9 @@ $(document).ready(function() {
 		$(this).addClass('noEditedYet');
 	});
 	
-	var table = "<tr><td colspan='10'><table id='features_list' align='center'>" +
-			"	<tr><td>" +
-			"		<input type='button' id='add_features' value='Agregar'/>" +
-			"	</td></tr>" +
-			"	<tr><th>COLOR</th><th>TALLA</th><th>CANTIDAD</th><th></th></tr>" +
-			"</table></td></tr>";
+	var table = "<tr><td colspan='10'>"+ $('#features_list_table').html() +"</td></tr>";
+
+	$('#features_list_table').remove();
 	
 	$("tbody").prepend(table);
 
@@ -76,6 +73,28 @@ function addDetailsRow()
 						<img src="<?php echo $this->rootPath ?>images/back.png" title="VOLVER AL LISTADO" border="0"> Volver al listado</a>
 
 <br/>
+
+<div id='features_list_table'>
+	<table id='features_list' align='center'>
+		<tr>
+			<td><input type='button' id='add_features' value='Agregar'/></td>
+		</tr>
+		<tr>
+			<th>COLOR</th>
+			<th>TALLA</th>
+			<th>CANTIDAD</th>
+			<th></th>
+		</tr>
+		<?php ?>
+		<tr id='row_<?php echo $this->rowNumber; ?>'>
+			<td><?php echo $this->colorSelect; ?></td>
+			<td><?php echo $this->sizeSelect; ?></td>
+			<td><input type='text' name='quantity_<?php echo $this->rowNumber; ?>' id='quantity_<?php echo $this->rowNumber; ?>' class='css-input_number_form' value='0'/></td>
+			<td><input type='button' class='delete_features' row='<?php echo $this->rowNumber; ?>' value='Borrar'/></td>
+		</tr>
+		<?php ?>
+	</table>
+</div>
 
 <div align="center">
 	<?php echo $this->form; ?>
