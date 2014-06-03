@@ -36,7 +36,7 @@ $(document).ready(function() {
 		var refreshImage = '<img src="'+ path +'" title="ACTUALIZAR" height="16px" width="16px">';
 		
 		// Avoid create more than one link per select element
-		if(! $('#' + id).length )
+		if(! $('#' + id).length)
 			$(this).after(" <a href='javascript:void(0)' id='"+ id +"' class='refreshSelectElement' type='"+ selectType +"'>"+ refreshImage +"</a> ");
 	});
 });

@@ -1,7 +1,7 @@
 <?php
 class App_Form_ItemForm extends Zend_Form
 {
-	public function __construct()
+	public function __construct($modify = false)
 	{
 		parent::__construct();
 		
@@ -19,6 +19,17 @@ class App_Form_ItemForm extends Zend_Form
 		$brand = new Zend_Form_Element_Select('brand_select');
 		$brand->setLabel("Marca:");
 		$brand->setRequired(false);
+		
+		if($modify == true)
+		{
+			$color = new Zend_Form_Element_Select('color_select');
+			$color->setLabel("Color:");
+			$color->setRequired(false);
+			
+			$size = new Zend_Form_Element_Select('size_select');
+			$size->setLabel("Talla:");
+			$size->setRequired(false);
+		}		
 		
 		$quantity = new Zend_Form_Element_Text('quantity');
 		$quantity->setLabel("Cantidad:");
@@ -53,10 +64,10 @@ class App_Form_ItemForm extends Zend_Form
 		$cost->setAttrib('class', 'css-input_number_form');
 		
 		$code = new Zend_Form_Element_Text('code');
-		$code->setLabel("Codigo:");
+		$code->setLabel("Codigo (*):");
 		//$code->addValidator( new App_CustomZendValidator_CodeExist("code") );
 		//$code->setRequired(true)->addErrorMessage('No puede estar vacio.');
-		$code->setRequired(false);
+		$code->setRequired(true);
 		$code->setAttrib('class', 'css-input_text_form');
 		
 		$description = new Zend_Form_Element_Textarea('description');
@@ -69,19 +80,35 @@ class App_Form_ItemForm extends Zend_Form
 		
 		$submit = new Zend_Form_Element_Submit('submit', array('label' => 'GUARDAR'));
 		
-		$this->addElements(array(
-				//$id, 
-				$type,
-				$code,
-				$brand,
-				$cost,
-				$quantity, 
-				$price, 
-				$finalPrice, 
-				$description, 
-				$origin, 
-				$detailRowsNumber, 
-				$submit));
+		if($modify == false)
+			$this->addElements(array(
+					//$id, 
+					$type,
+					$code,
+					$brand,
+					$cost,
+					$price, 
+					$finalPrice, 
+					$description, 
+					$origin, 
+					$detailRowsNumber, 
+					$submit));
+		else
+			$this->addElements(array(
+					//$id,
+					$type,
+					$code,
+					$brand,
+					$color,
+					$size,
+					$cost,
+					$quantity,
+					$price,
+					$finalPrice,
+					$description,
+					$origin,
+					$detailRowsNumber,
+					$submit));
 		
 		$this->setDecorators(array(
 				'FormElements',

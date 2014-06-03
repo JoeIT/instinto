@@ -4,6 +4,10 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	$('tr:contains(#color_select)').hide();
+	$('tr td #size_select').hide();
+
+
 	$('input,select').removeClass('noEditedYet');
 
 	$('input,select').change(function(){
@@ -16,7 +20,8 @@ $(document).ready(function() {
 	
 	$("tbody").prepend(table);
 
-	addDetailsRow();
+	if( Number($('#detail_rows_number').val()) == 0 )
+		addDetailsRow();
 	
 	$('#add_features').click(function(){
 		addDetailsRow();
@@ -37,6 +42,7 @@ function addDetailsRow()
 	$.ajax({
         url: rootPath + "item/ajaxloaddetails",
         type: 'POST',
+        async: 'false',
 		data: { rowNumber: detailRowIndex
 				},
         success: function(response)
@@ -49,12 +55,7 @@ function addDetailsRow()
             alert("Error retrieving select data - " + message);
         }
     });
-
-	
 }
-
-
-//<tr><td><input type='text' name='auxiliar' id='auxiliar' value='This data arrive!!'/></td></tr>
 </script>
 
 <style>
@@ -88,13 +89,11 @@ function addDetailsRow()
 		<?php 
 		$index = 0;
 		foreach ($this->detailsArray as $details){
-			
-
-			?>
+		?>
 		<tr id='row_<?php echo $index; ?>'>
-			<td></td>
-			<td></td>
-			<td><input type='text' name='quantity_<?php echo $index; ?>' id='quantity_<?php echo $index; ?>' class='css-input_number_form' value='<?php echo $details[2]?>'/></td>
+			<td><?php echo $details[0]; ?></td>
+			<td><?php echo $details[1];?></td>
+			<td><input type='text' name='quantity_<?php echo $index; ?>' id='quantity_<?php echo $index; ?>' class='css-input_number_form' value='<?php echo $details[2]; ?>'/></td>
 			<td><input type='button' class='delete_features' row='<?php echo $index; ?>' value='Borrar'/></td>
 		</tr>
 		<?php $index++; } ?>

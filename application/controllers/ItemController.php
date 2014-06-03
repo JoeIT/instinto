@@ -57,12 +57,14 @@ class ItemController extends Zend_Controller_Action {
 			$extraSearchURL .= "/code/$code";
 		
 		$this->_itemDao->createSearchWhere($brandSelected, $typeSelected, $sizeSelected, $colorSelected, $originSelected, $code);
+		$varietyItems = $this->_itemDao->countSearchAll();
 		$totalItems = $this->_itemDao->countSearchAll();
 		
-		$paginator = new App_Util_Paginator( $this->getRequest()->getBaseUrl() . '/item/index', $totalItems, $page, 50 );
+		$paginator = new App_Util_Paginator( $this->getRequest()->getBaseUrl() . '/item/index', $varietyItems, $page, 50 );
 		$paginator->addExtraUrlData($extraSearchURL);
 		
 		$this->view->totalItems = $totalItems;
+		$this->view->varietyItems = $varietyItems;
 		$this->view->dataList = $this->_itemDao->getSearchLimitOffset($paginator->getLimit(), $paginator->getOffset() );
 		$this->view->htmlPaginator = $paginator->showHtmlPaginator();
 		
@@ -98,66 +100,51 @@ class ItemController extends Zend_Controller_Action {
 		
 		if ($this->_request->getPost()) {
 			$formData = $this->_request->getPost();
+			
+			$index = 0;
+			for(; $index < $formData['detail_rows_number']; $index++)
+			{
+				if(isset( $formData['color_' . $index] ))
+				{
+					array_push($detailsArray, array($this->_buildSelectFromArray( 'color_' . $index, $this->_itemColorDao->getAll(), $formData['color_' . $index], ''), 
+													$this->_buildSelectFromArray( 'size_' . $index, $this->_itemSizeDao->getAll(), $formData['size_' . $index], ''), 
+													$formData['quantity_' . $index]	) );
+				}
+			}
+			
+			$form->detail_rows_number->setValue($index);
 		
 			if ($form->isValid($formData)) {
-				
-				$item = new App_Model_Item();
-				$item->setCode			( $formData['code'] );
-				$item->setBrand			( $this->_itemBrandDao->getById($formData['brand_select']) );
-				$item->setType			( $this->_itemTypeDao->getById($formData['type_select']) );
-				//$item->setColor			( $this->_itemColorDao->getById($formData['color_select']) );
-				//$item->setSize			( $this->_itemSizeDao->getById($formData['size_select']) );
-				$item->setOrigin		( $this->_itemOriginDao->getById($formData['origin_select']) );
-				$item->setQuantity		( $formData['quantity'] );
-				$item->setPrice			( $formData['price'] );
-				$item->setFinalPrice	( $formData['finalPrice'] );
-				$item->setCost			( $formData['cost'] );
-				$item->setDescription	( $formData['description'] );
-				$item->setCreationDate	( date_create(date('Y-m-d H:m:s')) );
-				
-				$index = 0;
-				for(; $index < $formData['detail_rows_number']; $index++)
+				for($index = 0; $index < $formData['detail_rows_number']; $index++)
 				{
 					if(isset( $formData['color_' . $index] ))
 					{
-						echo $formData['color_' . $index];
-					//if(isset( $formData['size_' . $index] ))
-						echo $formData['size_' . $index];
-					//if(isset( $formData['quantity_' . $index] ))
-						echo $formData['quantity_' . $index];
+						$item = new App_Model_Item();
+						$item->setCode			( $formData['code'] );
+						$item->setBrand			( $this->_itemBrandDao->getById($formData['brand_select']) );
+						$item->setType			( $this->_itemTypeDao->getById($formData['type_select']) );
+						$item->setColor			( $this->_itemColorDao->getById($formData['color_' . $index]) );
+						$item->setSize			( $this->_itemSizeDao->getById($formData['size_' . $index]) );
+						$item->setOrigin		( $this->_itemOriginDao->getById($formData['origin_select']) );
+						$item->setQuantity		( $formData['quantity_' . $index] );
+						$item->setPrice			( $formData['price'] );
+						$item->setFinalPrice	( $formData['finalPrice'] );
+						$item->setCost			( $formData['cost'] );
+						$item->setDescription	( $formData['description'] );
+						$item->setCreationDate	( date_create(date('Y-m-d H:m:s')) );
+						$item->setPhotoDir($formData['code']);
 						
-						$this->view->colorSelect = $this->_buildSelectFromArray( 'color_'.$index, $this->_itemColorDao->getAll(), $formData['color_' . $index], '');
-						$this->view->sizeSelect = $this->_buildSelectFromArray( 'size_'.$index, $this->_itemSizeDao->getAll(), $formData['size_' . $index], '');
-						
-						
-						array_push($detailsArray, array($formData['color_' . $index], $formData['size_' . $index], $formData['quantity_' . $index]));
+						$this->_itemDao->save($item);
 					}
-						
-					echo '</br></br>';
 				}
 				
-				$this->view->index = $index;
+				mkdir( self::PHOTO_ROOT_URL . $formData['code'], "0777");				
 				
-				
-				/*
-				$photoUrl = $item->getCode();
-				
-				$item->setPhotoDir($photoUrl);
-				
-				$dirPermission = "0777";
-				if( mkdir( self::PHOTO_ROOT_URL . $photoUrl, $dirPermission) )
-				{
-					$this->_itemDao->save($item);
-					$this->_helper->redirector('index');
-					return;
-				}
-				else
-					$this->view->message = "Error al crear directorio de fotografias.";
-				*/
+				$this->_helper->redirector('index');
+				return;				
 			}
 		}
-		$this->view->form = $form;
-		
+		$this->view->form = $form;		
 		$this->view->detailsArray = $detailsArray;
 	}
 	
@@ -171,8 +158,8 @@ class ItemController extends Zend_Controller_Action {
 		if($item == null)
 			$this->_helper->redirector('index');
 		
-		$form = new App_Form_ItemForm();
-		$this->_loadFormSelects($form);
+		$form = new App_Form_ItemForm(true);
+		$this->_loadFormSelects($form, true);
 		
 		if ($this->_request->getPost()) {
 			$formData = $this->_request->getPost();
@@ -229,16 +216,15 @@ class ItemController extends Zend_Controller_Action {
 			}
 		}
 		else {
-			$form = new App_Form_ItemForm();
+			$form = new App_Form_ItemForm(true);
 		}
 		
 		if (!empty($item)) {
 			$form->populate($item->toArray());
 			$form->enableEditFormExtraConfig();
 			
-			$this->_loadFormSelects($form);
+			$this->_loadFormSelects($form, true);
 			
-			// 
 			$form->type_select->		setValue( $item->getType()->getId() );
 			$form->brand_select->		setValue( $item->getBrand()->getId() );
 			$form->size_select->		setValue( $item->getSize()->getId() );
@@ -362,10 +348,16 @@ class ItemController extends Zend_Controller_Action {
 		$this->view->colorSelect	= $this->_buildSelectFromArray( 'color_'.$this->_getParam('rowNumber', '0'), $this->_itemColorDao->getAll(), $colorSelected, '');
 	}
 	
-	private function _loadFormSelects(&$form) {
+	private function _loadFormSelects(&$form, $modify=false) {
 		$form->brand_select->		addMultiOptions( $this->_buildSelectArray( $this->_itemBrandDao->getAll() ) );
 		$form->type_select->		addMultiOptions( $this->_buildSelectArray( $this->_itemTypeDao->getAll() ));
 		$form->origin_select->		addMultiOptions( $this->_buildSelectArray( $this->_itemOriginDao->getAll() ) );
+		
+		if($modify == true)
+		{
+			$form->color_select->	addMultiOptions( $this->_buildSelectArray( $this->_itemColorDao->getAll() ) );
+			$form->size_select->	addMultiOptions( $this->_buildSelectArray( $this->_itemSizeDao->getAll() ) );
+		}
 	}
 	
 	private function _buildSelectArray($fullTypeArray) {
@@ -405,8 +397,6 @@ class ItemController extends Zend_Controller_Action {
 	}
 	
 	public function testAction() {
-		
-		
 		/*
 		// PHPExcel
 		include '../library/PHPExcel/PHPExcel.php';
