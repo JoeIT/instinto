@@ -126,6 +126,10 @@ class ItemController extends Zend_Controller_Action {
 					//if(isset( $formData['quantity_' . $index] ))
 						echo $formData['quantity_' . $index];
 						
+						$this->view->colorSelect = $this->_buildSelectFromArray( 'color_'.$index, $this->_itemColorDao->getAll(), $formData['color_' . $index], '');
+						$this->view->sizeSelect = $this->_buildSelectFromArray( 'size_'.$index, $this->_itemSizeDao->getAll(), $formData['size_' . $index], '');
+						
+						
 						array_push($detailsArray, array($formData['color_' . $index], $formData['size_' . $index], $formData['quantity_' . $index]));
 					}
 						
@@ -153,6 +157,7 @@ class ItemController extends Zend_Controller_Action {
 			}
 		}
 		$this->view->form = $form;
+		
 		$this->view->detailsArray = $detailsArray;
 	}
 	

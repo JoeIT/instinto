@@ -85,14 +85,19 @@ function addDetailsRow()
 			<th>CANTIDAD</th>
 			<th></th>
 		</tr>
-		<?php ?>
-		<tr id='row_<?php echo $this->rowNumber; ?>'>
-			<td><?php echo $this->colorSelect; ?></td>
-			<td><?php echo $this->sizeSelect; ?></td>
-			<td><input type='text' name='quantity_<?php echo $this->rowNumber; ?>' id='quantity_<?php echo $this->rowNumber; ?>' class='css-input_number_form' value='0'/></td>
-			<td><input type='button' class='delete_features' row='<?php echo $this->rowNumber; ?>' value='Borrar'/></td>
+		<?php 
+		$index = 0;
+		foreach ($this->detailsArray as $details){
+			
+
+			?>
+		<tr id='row_<?php echo $index; ?>'>
+			<td></td>
+			<td></td>
+			<td><input type='text' name='quantity_<?php echo $index; ?>' id='quantity_<?php echo $index; ?>' class='css-input_number_form' value='<?php echo $details[2]?>'/></td>
+			<td><input type='button' class='delete_features' row='<?php echo $index; ?>' value='Borrar'/></td>
 		</tr>
-		<?php ?>
+		<?php $index++; } ?>
 	</table>
 </div>
 
