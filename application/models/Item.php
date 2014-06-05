@@ -52,6 +52,7 @@ class App_Model_Item {
 	 *
 	 * @ManyToOne(targetEntity="App_Model_ItemColor")
 	 * @JoinColumn(name="color_id", referencedColumnName="id")
+	 * @OrderBy({"name" = "ASC"})
 	 */
 	protected $color;
 	

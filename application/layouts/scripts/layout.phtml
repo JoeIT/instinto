@@ -15,7 +15,7 @@ echo $this->doctype();
     	echo $this->headLink()->prependStylesheet($this->baseUrl() . '/css/ui-lightness/jquery-ui-1.10.3.custom.min.css');
     	echo $this->headLink()->prependStylesheet($this->baseUrl() . '/css/style.css');
 
-    	echo $this->headScript()->appendFile($this->baseUrl() . '/js/jquery-1.10.2.min.js','text/javascript');
+    	echo $this->headScript()->appendFile($this->baseUrl() . '/js/jquery-2.1.1.js','text/javascript');
     	echo $this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui-1.10.3.custom.min.js','text/javascript');
 
     	echo "<input type='hidden' id='SYSTEM_ROOT_PATH' value='http://$_SERVER[HTTP_HOST]" . $this->baseUrl() ."/'/>";
@@ -23,9 +23,6 @@ echo $this->doctype();
 			
 <script type="text/javascript">
 $(document).ready(function() {
-	//alert('URL: ' + $('#SYSTEM_ROOT_PATH').val());
-	//alert('URL: ' + location.href);
-	//alert('URL: ' + window.location.pathname);
 	updateCurrentMenuBar();	
 });
 
@@ -60,7 +57,7 @@ function updateCurrentMenuBar()
 							<a href="<?php echo $this->baseUrl() . "/index"; ?>"  id="menu_index" class="current">Inicio</a>
 						</li>
 						<li>
-							<a href="javascript:void()" id="">VENTAS</a>
+							<a href="<?php echo $this->baseUrl(); ?>/sales/index" id="">VENTAS</a>
 						</li>
 						<li>
 							<a href="<?php echo $this->baseUrl(); ?>/item/index" id="menu_item">Items</a>

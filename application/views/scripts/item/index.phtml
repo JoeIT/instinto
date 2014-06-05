@@ -20,7 +20,7 @@ $(document).ready(function () {
 });
 </script>
 
-<h1>Lista items:</h1>
+<h1>Inventario items:</h1>
 <div align="right">
 			<a
 				href='<?php
@@ -34,7 +34,7 @@ $(document).ready(function () {
 			<br/>
 			<b>Variedad de items: <?php echo $this->varietyItems;?> </b>
 			<br/>
-			<b>Total items: <?php echo $this->totalItems;?> </b>
+			<b>Total items disponibles: <?php echo $this->totalItems;?> </b>
 </div>
 
 <div id='content_left'>
@@ -96,6 +96,7 @@ $(document).ready(function () {
 		<th>Tipo</th>
 		<th>Talla</th>
 		<th>Color</th>
+		<th>Cant.</th>
 		<th>Precio unid.</th>
 		<th>Precio final unid.</th>
 		<th>Procedencia</th>
@@ -112,6 +113,7 @@ $(document).ready(function () {
 		<td><?php echo $item->getType()->getName(); ?></td>
 		<td><?php echo $item->getSize()->getName(); ?></td>
 		<td><?php echo $item->getColor()->getName(); ?></td>
+		<td align='right'><?php echo $item->getQuantity(); ?></td>
 		<td align='right'><?php echo $item->getPrice(); ?></td>
 		<td align='right'><?php echo $item->getFinalPrice(); ?></td>
 		<td><?php echo $item->getOrigin()->getName(); ?></td>

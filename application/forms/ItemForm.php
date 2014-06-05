@@ -29,6 +29,10 @@ class App_Form_ItemForm extends Zend_Form
 			$size = new Zend_Form_Element_Select('size_select');
 			$size->setLabel("Talla:");
 			$size->setRequired(false);
+			
+			$availability = new Zend_Form_Element_Select('availability_select');
+			$availability->setLabel("Disponibilidad:");
+			$availability->setRequired(false);
 		}		
 		
 		$quantity = new Zend_Form_Element_Text('quantity');
@@ -101,6 +105,7 @@ class App_Form_ItemForm extends Zend_Form
 					$brand,
 					$color,
 					$size,
+					$availability, 
 					$cost,
 					$quantity,
 					$price,

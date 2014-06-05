@@ -37,7 +37,7 @@ img {
 	margin: 0 auto;
 	padding: 0 10px;
 	/*background: #1c1c1b url(../images/bg.jpg) repeat-y;*/
-	background: #07111F;
+	background: #000000;
 }
 
 /* menu */
@@ -45,7 +45,11 @@ img {
 	width: auto;
 	height: 50px;
 	/*background: url(../images/logo.jpg) repeat; */
-	background: #CC5850;
+	background: #640E0E;
+	border-top: 2px solid #ffffff;
+	border-bottom: 2px solid #ffffff;
+	border-right: 2px solid #ffffff;
+	border-left: 2px solid #ffffff;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 }
@@ -73,21 +77,24 @@ img {
 	text-decoration: none;
 	
 	color: #FFFFFF;
-	background: #122C3B;
+	background: #000000;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
 }
 
 #menu li .current {
-	color: #F7F6C3;
-	background: #1B5257;
+	color: #640E0E;
+	text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+	background: #FFCCCC;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
 }
 
 #menu li a:hover {
-	color: #F7F6C3;
-	background: #1B5257;
+	color: #640E0E;
+	text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+	background: #66B2FF;
+	border: 1px solid #640E0E;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
 }
@@ -146,9 +153,14 @@ img {
 	width: auto;
 	padding: 20px 0px 20px 0;
 	text-align: center;
-	border-top: 1px solid #25211e;
-	color: #999;
-	background-color: #111110;
+	border-top: 2px solid #ffffff;
+	border-bottom: 2px solid #ffffff;
+	border-left: 2px solid #ffffff;
+	border-right: 2px solid #ffffff;
+	color: #ffffff;
+	background-color: #640E0E;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 }
 
 #footer a {
@@ -159,16 +171,19 @@ img {
 
 /************************************************/
 tr:nth-child(even) {
-  background-color: #625D5D;
+	background-color: #640E0E;
 }
 
 th {
-	color: #F7F6C3;
-	background: #1B5257;
+	color: #640E0E;
+	text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+	background: #FFCCCC;
+	border: 1px solid #640E0E;
 }
 
 h1, h2, h3 {
-	color: #F7F6C3;
+	color: #640E0E;
+	text-shadow: -1px 0 white, 0 2px white, 2px 0 white, 0 -1px white;
 }
 
 .css-table-index td {
@@ -226,6 +241,13 @@ h1, h2, h3 {
 	width: 100%;
 	font-size: x-small;
 }
+
+.css-container_notification {
+	color: #F7F6C3;
+	font-style: italic;
+	font-weight: bold;
+}
+
 
 .errors li {
 	background-color: red;

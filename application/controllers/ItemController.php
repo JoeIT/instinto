@@ -1,14 +1,14 @@
 <?php
 class ItemController extends Zend_Controller_Action {
 	
-	private $_search;
-	
 	private $_itemDao;
 	private $_itemTypeDao;
 	private $_itemBrandDao;
 	private $_itemColorDao;
 	private $_itemOriginDao;
 	private $_itemSizeDao;
+	
+	private $_itemUtils;
 	
 	const PHOTO_ROOT_URL = "Photos/";
 	
@@ -22,6 +22,8 @@ class ItemController extends Zend_Controller_Action {
 		$this->_itemSizeDao = new App_Dao_ItemSizeDao();
 		$this->_itemColorDao = new App_Dao_ItemColorDao();
 		$this->_itemOriginDao = new App_Dao_ItemOriginDao();
+		
+		$this->_itemUtils = new App_Util_ItemUtils();
 		
 		//echo date('H:i:s');
 		/*
@@ -50,7 +52,7 @@ class ItemController extends Zend_Controller_Action {
 		if( !empty($sizeSelected) )
 			$extraSearchURL .= "/size/$sizeSelected";
 		if( !empty($colorSelected) )
-			$extraSearchURL .= "/color/$color";
+			$extraSearchURL .= "/color/$colorSelected";
 		if( !empty($originSelected) )
 			$extraSearchURL .= "/origin/$originSelected";
 		if( !empty($code) )
@@ -58,7 +60,7 @@ class ItemController extends Zend_Controller_Action {
 		
 		$this->_itemDao->createSearchWhere($brandSelected, $typeSelected, $sizeSelected, $colorSelected, $originSelected, $code);
 		$varietyItems = $this->_itemDao->countSearchAll();
-		$totalItems = $this->_itemDao->countSearchAll();
+		$totalItems = $this->_itemDao->countTotalAll();
 		
 		$paginator = new App_Util_Paginator( $this->getRequest()->getBaseUrl() . '/item/index', $varietyItems, $page, 50 );
 		$paginator->addExtraUrlData($extraSearchURL);
@@ -68,11 +70,11 @@ class ItemController extends Zend_Controller_Action {
 		$this->view->dataList = $this->_itemDao->getSearchLimitOffset($paginator->getLimit(), $paginator->getOffset() );
 		$this->view->htmlPaginator = $paginator->showHtmlPaginator();
 		
-		$this->view->brandSelect	= $this->_buildSelectFromArray( 'brand', $this->_itemBrandDao->getAll(), $brandSelected, 'search_component', true );
-		$this->view->typeSelect		= $this->_buildSelectFromArray( 'type', $this->_itemTypeDao->getAll(), $typeSelected, 'search_component', true );
-		$this->view->sizeSelect		= $this->_buildSelectFromArray( 'size', $this->_itemSizeDao->getAll(), $sizeSelected, 'search_component', true );
-		$this->view->colorSelect	= $this->_buildSelectFromArray( 'color', $this->_itemColorDao->getAll(), $colorSelected, 'search_component', true );
-		$this->view->originSelect	= $this->_buildSelectFromArray( 'origin', $this->_itemOriginDao->getAll(), $originSelected, 'search_component', true );
+		$this->view->brandSelect	= $this->_itemUtils->buildSelectFromArray( 'brand', $this->_itemBrandDao->getAll(), $brandSelected, 'search_component', true );
+		$this->view->typeSelect		= $this->_itemUtils->buildSelectFromArray( 'type', $this->_itemTypeDao->getAll(), $typeSelected, 'search_component', true );
+		$this->view->sizeSelect		= $this->_itemUtils->buildSelectFromArray( 'size', $this->_itemSizeDao->getAll(), $sizeSelected, 'search_component', true );
+		$this->view->colorSelect	= $this->_itemUtils->buildSelectFromArray( 'color', $this->_itemColorDao->getAll(), $colorSelected, 'search_component', true );
+		$this->view->originSelect	= $this->_itemUtils->buildSelectFromArray( 'origin', $this->_itemOriginDao->getAll(), $originSelected, 'search_component', true );
 		$this->view->code			= $code;
 		$this->view->extraSearchURL = $extraSearchURL;
 	}
@@ -106,8 +108,8 @@ class ItemController extends Zend_Controller_Action {
 			{
 				if(isset( $formData['color_' . $index] ))
 				{
-					array_push($detailsArray, array($this->_buildSelectFromArray( 'color_' . $index, $this->_itemColorDao->getAll(), $formData['color_' . $index], ''), 
-													$this->_buildSelectFromArray( 'size_' . $index, $this->_itemSizeDao->getAll(), $formData['size_' . $index], ''), 
+					array_push($detailsArray, array($this->_itemUtils->buildSelectFromArray( 'color_' . $index, $this->_itemColorDao->getAll(), $formData['color_' . $index], ''), 
+													$this->_itemUtils->buildSelectFromArray( 'size_' . $index, $this->_itemSizeDao->getAll(), $formData['size_' . $index], ''), 
 													$formData['quantity_' . $index]	) );
 				}
 			}
@@ -343,57 +345,20 @@ class ItemController extends Zend_Controller_Action {
 		$sizeSelected = $this->_getParam('sizeSelected', '');
 		$colorSelected = $this->_getParam('colorSelected', '');
 		
-		
-		$this->view->sizeSelect		= $this->_buildSelectFromArray( 'size_'.$this->_getParam('rowNumber', '0'), $this->_itemSizeDao->getAll(), $sizeSelected, '');
-		$this->view->colorSelect	= $this->_buildSelectFromArray( 'color_'.$this->_getParam('rowNumber', '0'), $this->_itemColorDao->getAll(), $colorSelected, '');
+		$this->view->sizeSelect		= $this->_itemUtils->buildSelectFromArray( 'size_'.$this->_getParam('rowNumber', '0'), $this->_itemSizeDao->getAll(), $sizeSelected, '');
+		$this->view->colorSelect	= $this->_itemUtils->buildSelectFromArray( 'color_'.$this->_getParam('rowNumber', '0'), $this->_itemColorDao->getAll(), $colorSelected, '');
 	}
 	
 	private function _loadFormSelects(&$form, $modify=false) {
-		$form->brand_select->		addMultiOptions( $this->_buildSelectArray( $this->_itemBrandDao->getAll() ) );
-		$form->type_select->		addMultiOptions( $this->_buildSelectArray( $this->_itemTypeDao->getAll() ));
-		$form->origin_select->		addMultiOptions( $this->_buildSelectArray( $this->_itemOriginDao->getAll() ) );
+		$form->brand_select->		addMultiOptions( $this->_itemUtils->buildSelectArray( $this->_itemBrandDao->getAll() ) );
+		$form->type_select->		addMultiOptions( $this->_itemUtils->buildSelectArray( $this->_itemTypeDao->getAll() ));
+		$form->origin_select->		addMultiOptions( $this->_itemUtils->buildSelectArray( $this->_itemOriginDao->getAll() ) );
 		
 		if($modify == true)
 		{
-			$form->color_select->	addMultiOptions( $this->_buildSelectArray( $this->_itemColorDao->getAll() ) );
-			$form->size_select->	addMultiOptions( $this->_buildSelectArray( $this->_itemSizeDao->getAll() ) );
+			$form->color_select->			addMultiOptions( $this->_itemUtils->buildSelectArray( $this->_itemColorDao->getAll() ) );
+			$form->size_select->			addMultiOptions( $this->_itemUtils->buildSelectArray( $this->_itemSizeDao->getAll() ) );
 		}
-	}
-	
-	private function _buildSelectArray($fullTypeArray) {
-		$result = array();
-		
-		foreach($fullTypeArray as $type)
-		{
-			$result[$type->getId()] = $type->getName(); 
-		}
-
-		return $result;
-	}
-	
-	private function _buildSelectFromArray( $htmlId, $fullDataArray, $thisSelected, $htmlClass, $allowAllOption=false)
-	{
-		$class = '';
-		if(!empty($htmlClass))
-			$class = " class='$htmlClass' ";
-		
-		$selectHtml = "<select id='$htmlId' name='$htmlId' $class >";
-		
-		if($allowAllOption == true)
-			$selectHtml .= "<option value=''>TODOS</option>";
-	
-		foreach($fullDataArray as $type)
-		{
-			$selected = '';
-			if($type->getId() == $thisSelected)
-				$selected = 'selected';
-			
-			$selectHtml .= "<option value='". $type->getId() ."' $selected >". $type->getName() ."</option>";
-		}
-	
-		$selectHtml .= "</select>";
-	
-		return $selectHtml;
 	}
 	
 	public function testAction() {

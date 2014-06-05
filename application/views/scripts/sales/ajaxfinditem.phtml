@@ -1,0 +1,40 @@
+<table align='center'>
+	<tr>
+		<th>C&oacute;digo</th>
+		<th>Tipo</th>
+		<th>Marca</th>
+		<th>Color</th>
+		<th>Talla</th>
+		<th>Disponibles</th>
+		<th>Precio</th>
+		<th>Precio final</th>
+	</tr>
+	
+	<?php
+	if(count($this->itemResults) <= 0) {
+	?>
+	
+	<tr>
+		<td colspan='8' align='center'><h3>No se encontraron resultados!!!</h3></td>
+	</tr>
+	
+	<?php
+	}
+	
+	
+	foreach ( $this->itemResults as $item ) {
+		?>
+	<tr title="<?php echo $item->getDescription(); ?>">
+		<td><?php echo $item->getCode(); ?></td>
+		<td><?php echo $item->getType()->getName(); ?></td>
+		<td><?php echo $item->getBrand()->getName(); ?></td>
+		<td><?php echo $item->getColor()->getName(); ?></td>
+		<td><?php echo $item->getSize()->getName(); ?></td>
+		<td align='right'>123</td>
+		<td align='right'><?php echo $item->getPrice(); ?></td>
+		<td align='right'><?php echo $item->getFinalPrice(); ?></td>
+	</tr>
+	<?php
+	}
+	?>	
+</table>

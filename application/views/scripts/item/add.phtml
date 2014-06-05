@@ -29,6 +29,20 @@ $(document).ready(function() {
 	
 	$(document).on('click', "input.delete_features", function () {
 		$('#row_' + $(this).attr('row')).remove();
+		sumTotalQuantity();
+	});
+
+	$(document).on('change', "input.quantity_field", function () {
+		var value = $(this).val();
+		if($.isNumeric( value ))
+		{
+			if(Number(value) < 0 || Math.floor(value) != value)
+				$(this).val('0');
+		}
+		else
+			$(this).val('0');
+
+		sumTotalQuantity();
 	});
 });
 
@@ -56,6 +70,17 @@ function addDetailsRow()
         }
     });
 }
+
+function sumTotalQuantity()
+{
+	var total = 0
+	$('input.quantity_field').each(function(){
+		total += Number($(this).val());
+	});
+
+	$('#total_quantity').html( 'Total = ' + total );
+}
+
 </script>
 
 <style>
@@ -93,11 +118,12 @@ function addDetailsRow()
 		<tr id='row_<?php echo $index; ?>'>
 			<td><?php echo $details[0]; ?></td>
 			<td><?php echo $details[1];?></td>
-			<td><input type='text' name='quantity_<?php echo $index; ?>' id='quantity_<?php echo $index; ?>' class='css-input_number_form' value='<?php echo $details[2]; ?>'/></td>
+			<td align='center'><input type='text' name='quantity_<?php echo $index; ?>' id='quantity_<?php echo $index; ?>' class='quantity_field,css-input_number_form' value='<?php echo $details[2]; ?>'/></td>
 			<td><input type='button' class='delete_features' row='<?php echo $index; ?>' value='Borrar'/></td>
 		</tr>
 		<?php $index++; } ?>
 	</table>
+	<div id='total_quantity' align='center' class='css-container_notification'>Total = 0</div>
 </div>
 
 <div align="center">

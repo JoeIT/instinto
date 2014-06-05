@@ -20,7 +20,7 @@ class App_Dao_ItemSizeDao {
 	}
 
 	public function getAll() {
-		$query = $this->entityManager->createQuery ( 'SELECT isize FROM App_Model_ItemSize isize ORDER BY isize.name' );
+		$query = $this->entityManager->createQuery ( 'SELECT isize FROM App_Model_ItemSize isize' );
 
 		return $query->getResult ();
 	}
