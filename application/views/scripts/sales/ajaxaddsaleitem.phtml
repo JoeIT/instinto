@@ -1,0 +1,48 @@
+<table id='' border='2' width='800px'>
+	<tr>
+		<th rowspan='5' class='css-container_photo_sample'>
+		<?php
+			$folder = $this->photosPath . $this->item->getPhotoDir() . '/';
+			//$filetype = strtolower($this->item->getColor()->getName()) . '.*'; // To get the photo for each colour
+			$filetype = '*.*';
+			$files = glob($folder . $filetype);
+			
+			if(count($files) > 0)
+				echo "<img src='" . $this->rootPath . "/" . $files[0] . "'  />";			
+		?>
+		</th>
+		<th colspan='2'>CODIGO: <?php echo $this->item->getCode(); ?></th>
+		<th>
+			<select>
+				<option value=''>VENTA</option>
+				<option value=''>Prestamo</option>
+				<option value=''>Reserva</option>
+				<option value=''>CLARI</option>
+				<option value=''>Robado/Extraviado</option>
+			</select>
+		</th>
+		<th>Borrar</th>
+	</tr>
+	<tr>
+		<th>MARCA: <?php echo $this->item->getBrand()->getName(); ?></th>
+		<th>TIPO: <?php echo $this->item->getType()->getName(); ?></th>
+		<th>COLOR: <?php echo $this->item->getColor()->getName(); ?></th>
+		<th>TALLA: <?php echo $this->item->getSize()->getName(); ?></th>		
+	</tr>
+	<tr>
+		<td>Cantidad: <input type='text' value='' class='css-input_number_form' /> / <?php echo '4'; ?></td>
+		<td colspan='2'>Precio unit: <input type='text' value='' class='css-input_number_form' /> - Bs. <?php echo $this->item->getPrice(); ?></td>
+		<td>Total a pagar: Bs. 135</td>
+		
+	</tr>
+	<tr>
+		<td colspan='2'>Nombre: <input type='text' value='' /></td>
+		<td>A cuenta: Bs.<input type='text' value='' class='css-input_number_form' /></td>
+		<td>Debe: Bs. 85</td>
+	</tr>
+	<tr>
+		<td colspan='4'>
+			Observaciones: <textarea rows='3' cols='40'></textarea>
+		</td>
+	</tr>
+</table>

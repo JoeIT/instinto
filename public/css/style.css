@@ -204,17 +204,6 @@ h1, h2, h3 {
 	color: #F7F6C3;
 }
 
-.css-div-images img {
-    display: block;
-    margin: 20px auto 10px;
-    max-width: 800px;
-    outline: none;
-}
-
-.css-div-images img:active {
-    max-width: 100%;
-}
-
 .paginator_field {
 	background-color: #363333;
 }
@@ -248,6 +237,18 @@ h1, h2, h3 {
 	font-weight: bold;
 }
 
+.css-container_photo img {
+    width: 500px;
+	height: auto;
+	display: block;
+	margin: 20px auto 10px;
+	outline: none;
+}
+
+.css-container_photo_sample img {
+    width: 160px;
+    height: auto;
+}
 
 .errors li {
 	background-color: red;

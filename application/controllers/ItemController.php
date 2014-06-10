@@ -12,8 +12,6 @@ class ItemController extends Zend_Controller_Action {
 	
 	const PHOTO_ROOT_URL = "Photos/";
 	
-	private $ROOT_PATH;
-	
 	public function init() {
 		/* Initialize action controller here */
 		$this->_itemDao = new App_Dao_ItemDao ();
@@ -129,6 +127,7 @@ class ItemController extends Zend_Controller_Action {
 						$item->setSize			( $this->_itemSizeDao->getById($formData['size_' . $index]) );
 						$item->setOrigin		( $this->_itemOriginDao->getById($formData['origin_select']) );
 						$item->setQuantity		( $formData['quantity_' . $index] );
+						$item->setStockQuantity	( $formData['quantity_' . $index] );
 						$item->setPrice			( $formData['price'] );
 						$item->setFinalPrice	( $formData['finalPrice'] );
 						$item->setCost			( $formData['cost'] );

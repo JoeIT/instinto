@@ -1,0 +1,103 @@
+
+
+<script type="text/javascript">
+var rootPath = $('#SYSTEM_ROOT_PATH').val();
+
+$(document).ready(function() {
+	
+
+	$('#search_code').keyup(function(){
+		loadResultsTable();
+	});
+
+	$('.search_component').change(function(){
+		loadResultsTable();
+	});
+
+	$(document).on('click', "a.item_to_sale", function () {
+		$.ajax({
+	        url: rootPath + "sales/ajaxaddsaleitem",
+	        type: 'POST',
+	        async: 'false',
+			data: { id: $(this).attr('item_code')
+					},
+	        success: function(itemAdded)
+			{
+	        	$('#sales_tables').prepend('</br>');
+	        	$('#sales_tables').prepend( itemAdded );
+	        },
+	        error: function(request, textStatus, errorThrown)
+			{
+	            var message = (request.status == 403) ? request.responseText : message;
+	            alert("Error retrieving search_text data - " + message);
+	        }
+	    });
+
+		
+	});	
+});
+
+function loadResultsTable()
+{
+	$.ajax({
+        url: rootPath + "sales/ajaxfinditem",
+        type: 'POST',
+        async: 'false',
+		data: { brand: $('#brand_select_search').val(),
+				type: $('#type_select_search').val(),
+				size: $('#size_select_search').val(),
+				color: $('#color_select_search').val(),
+				code: $('#search_code').val()
+				},
+        success: function(resultsTable)
+		{
+        	$('#search_panel').html( resultsTable );
+        },
+        error: function(request, textStatus, errorThrown)
+		{
+            var message = (request.status == 403) ? request.responseText : message;
+            alert("Error retrieving search_text data - " + message);
+        }
+    });
+}
+
+</script>
+
+
+<div id='content_left'>
+	<table class='css-table-search' align='center'>
+		<tr>
+			<th colspan='2'>BUSCADOR</th>
+		<tr>
+			<th>C&oacute;digo</th>
+			<td><input type='text' id=search_code name='search_code' value=''/></td>
+		</tr>
+		<tr>
+			<th>Tipo</th>
+			<td><?php echo $this->typeSelect; ?></td>
+		</tr>
+		<tr>
+			<th>Marca</th>
+			<td><?php echo $this->brandSelect; ?></td>
+		</tr>
+		<tr>
+			<th>Talla</th>
+			<td><?php echo $this->sizeSelect; ?></td>
+		</tr>
+		<tr>
+			<th>Color</th>
+			<td><?php echo $this->colorSelect; ?></td>
+		</tr>					
+	</table>
+</div>
+
+<div id='search_panel' style="width: 70%; height: 150px; overflow-y: auto;">
+</div>
+
+<p>
+	<h2>Compras:</h2> <input type='text' value='AQUI VA LA FECHA' />
+</p>
+
+<div align='center' id='sales_tables'>  
+</div>
+

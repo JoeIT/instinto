@@ -10,15 +10,17 @@
 
 <br/>
 
-<div align="center">
-	<?php echo $this->form; ?>
+<div id='content_left'>
+	<div align="center">
+		<?php echo $this->form; ?>
+	</div>
+	
+	<div align="center">
+		<?php echo $this->message; ?>
+	</div>
 </div>
 
-<div align="center">
-	<?php echo $this->message; ?>
-</div>
-
-<div id="item_images" class="css-div-images">
+<div id="item_images" class="css-container_photo">
 	<?php
 	$folder = $this->photosPath . $this->item->getPhotoDir() . '/';
 	$filetype = '*.*';

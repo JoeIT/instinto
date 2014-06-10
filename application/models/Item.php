@@ -15,7 +15,6 @@ class App_Model_Item {
 	 */
 	protected $id;
 	
-	// The custom format validator depends of this name
 	/**
 	 * @var string
 	 *
@@ -70,6 +69,13 @@ class App_Model_Item {
 	 * @Column(name="quantity", type="integer", nullable=false)
 	 */
 	protected $quantity;
+	
+	/**
+	 * @var decimal
+	 *
+	 * @Column(name="quantity_stock", type="integer", nullable=false)
+	 */
+	protected $quantityStock;
 	
 	/**
 	 * @var decimal
@@ -182,6 +188,14 @@ class App_Model_Item {
 	
 	public function setQuantity($quantity) {
 		$this->quantity = $quantity;
+	}
+	
+	public function getQuantityStock() {
+		return $this->quantityStock;
+	}
+	
+	public function setQuantityStock($quantityStock) {
+		$this->quantityStock = $quantityStock;
 	}
 	
 	public function getCost() {

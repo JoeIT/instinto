@@ -1,21 +1,3 @@
-Doctrine 2
-
-Configurar Doctrine 2
-
-    Descargar el archivo doctrine-library.rar en la sección de Downloads.
-    Descomprimir en la ruta C:\xampp\doctrine-library ; Este debe contener los directorios bin\ y Doctrine\
-    Abrir el archivo C:\xampp\doctrine-library\bin\doctrine.php y modificar la siguiente linea con respecto a la ruta del proyecto:
-
-define('APPLICATION_PATH', 'C:/xampp/htdocs/sis-tramites/application');
-
-- Para utilizar doctrine basta con abrir la linea de comandos de Windows (CMD), posicionarse en el directorio del proyecto. i.e.: C:\xampp\htdocs\sis-tramites; y ejecutar los comandos de doctrine que se necesiten.
-Comandos más utilizados en Doctrine
-
-	* Crear todas las tablas a partir de las clases modelos:
-		doctrine orm:schema-tool:create
-
-	* Eliminar todas las tablas de la base de datos:
-		doctrine orm:schema-tool:drop --force
-
-    * Actualizar todas las tablas de la base de datos a partir de los cambios realizados en las clases Modelo
-		doctrine orm:schema-tool:update --force
+- Hacer que al registrar un item, compruebe si ya fue registrado su codigo (ej LX-123), si fuera asi,
+impedir que se cree uno nuevo.
+- 

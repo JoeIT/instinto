@@ -2,10 +2,13 @@
 class SalesController extends Zend_Controller_Action {
 	
 	private $_itemDao;
-	
 	private $_itemUtils;
 	
+	const PHOTO_ROOT_URL = "Photos/";
+	
 	public function init() {
+		$this->view->rootPath = $this->getFrontController()->getBaseUrl() . '/'; // /zf/public/
+		
 		$this->_itemDao = new App_Dao_ItemDao ();
 		$this->_itemTypeDao = new App_Dao_ItemTypeDao();
 		$this->_itemBrandDao = new App_Dao_ItemBrandDao();
@@ -13,11 +16,13 @@ class SalesController extends Zend_Controller_Action {
 		$this->_itemColorDao = new App_Dao_ItemColorDao();
 		$this->_itemOriginDao = new App_Dao_ItemOriginDao();
 		
-		
 		$this->_itemUtils = new App_Util_ItemUtils();
 	}
 	
-	public function indexAction() {
+	public function indexAction() {		
+	}
+	
+	public function salesAction() {
 		$brandSelected = '';
 		$typeSelected = '';
 		$sizeSelected = '';
@@ -43,5 +48,13 @@ class SalesController extends Zend_Controller_Action {
 		
 		$this->_itemDao->createSearchWhere($brand, $type, $size, $color, '', $code);
 		$this->view->itemResults = $this->_itemDao->getSearchLimitOffset(999999, 0);
+	}
+	
+	public function ajaxaddsaleitemAction() {
+		$this->_helper->layout->disableLayout();
+		$id = $this->_getParam('id', '');
+		$this->view->item = $this->_itemDao->getById($id);
+		
+		$this->view->photosPath = self::PHOTO_ROOT_URL;
 	}	
 }
