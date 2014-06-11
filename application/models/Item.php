@@ -51,7 +51,6 @@ class App_Model_Item {
 	 *
 	 * @ManyToOne(targetEntity="App_Model_ItemColor")
 	 * @JoinColumn(name="color_id", referencedColumnName="id")
-	 * @OrderBy({"name" = "ASC"})
 	 */
 	protected $color;
 	
@@ -69,13 +68,6 @@ class App_Model_Item {
 	 * @Column(name="quantity", type="integer", nullable=false)
 	 */
 	protected $quantity;
-	
-	/**
-	 * @var decimal
-	 *
-	 * @Column(name="quantity_stock", type="integer", nullable=false)
-	 */
-	protected $quantityStock;
 	
 	/**
 	 * @var decimal
@@ -135,7 +127,7 @@ class App_Model_Item {
 	}
 
 	public function getCode() {
-		return utf8_encode($this->code);
+		return $this->code;
 	}
 
 	public function setCode($code) {

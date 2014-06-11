@@ -246,8 +246,29 @@ h1, h2, h3 {
 }
 
 .css-container_photo_sample img {
-    width: 160px;
+    width: 150px;
     height: auto;
+}
+
+.css-search_div_panel {
+	width: 650px;
+	height: 150px;
+	margin-left: auto;
+	margin-right: auto;
+	overflow-y: auto;	
+}
+
+.css-sale_table {
+	width: 800px;
+	border:2px double white;
+	border-radius:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+}
+
+/* Don't erase this style, this belongs to htmlComponentValidator.js */
+.css-input_text_error {
+	border: 5px double #FF3366;
 }
 
 .errors li {

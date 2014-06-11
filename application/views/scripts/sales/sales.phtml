@@ -1,11 +1,9 @@
 
-
 <script type="text/javascript">
 var rootPath = $('#SYSTEM_ROOT_PATH').val();
+var row = -1;
 
 $(document).ready(function() {
-	
-
 	$('#search_code').keyup(function(){
 		loadResultsTable();
 	});
@@ -15,16 +13,20 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', "a.item_to_sale", function () {
+		row = Number(row) + 1;
+
 		$.ajax({
 	        url: rootPath + "sales/ajaxaddsaleitem",
 	        type: 'POST',
 	        async: 'false',
-			data: { id: $(this).attr('item_code')
+			data: { id: $(this).attr('item_code'),
+					row: row
 					},
 	        success: function(itemAdded)
 			{
 	        	$('#sales_tables').prepend('</br>');
 	        	$('#sales_tables').prepend( itemAdded );
+	        	$('#sale_reserved_' + row ).hide();
 	        },
 	        error: function(request, textStatus, errorThrown)
 			{
@@ -32,10 +34,50 @@ $(document).ready(function() {
 	            alert("Error retrieving search_text data - " + message);
 	        }
 	    });
+	});
 
+	$(document).on('click', "input.delete_button", function () {
+		if (confirm("Desea QUITAR el item de la lista de venta???") == true)
+			$('#sale_table_' + $(this).attr('row')).remove();		
+	});
+
+	$(document).on('change', "select.sale_type", function () {
+		var row = $(this).attr('row');
+
+		// If is reserved type
+		if( $(this).val() == '2' )
+		{
+			$('#sale_anticipated_payment_' + row).val('0.00');
+			$('#sale_debt_' + row).html('0.00');
+			$('#sale_reserved_' + row).show();
+		}	
+		else
+			$('#sale_reserved_' + row).hide();
+	});
+
+	$(document).on('keyup', "input.sale_total_calculate", function () {
+		var row = $(this).attr('row');
 		
-	});	
+		validateInputText(this);
+
+		var total = Number($('#sale_quantity_' + row).val()) * Number($('#sale_unit_price_' + row).val());
+		$('#sale_total_' + row).html(total.toFixed(2));				
+	});
+
+	$(document).on('change', "input.sale_debt_calculate", function () {
+		var row = $(this).attr('row');
+		
+		if($('#sale_reserved_' + row).is(":visible") && $('#sale_anticipated_payment_' + row).val() > 0)
+		{
+			validateInputText(this);
+
+			var debt = (Number($('#sale_quantity_' + row).val()) * Number($('#sale_unit_price_' + row).val())) - Number($('#sale_anticipated_payment_' + row).val());
+			$('#sale_debt_' + row).html(debt.toFixed(2));
+		}
+	});
 });
+
+
 
 function loadResultsTable()
 {
@@ -91,7 +133,7 @@ function loadResultsTable()
 	</table>
 </div>
 
-<div id='search_panel' style="width: 70%; height: 150px; overflow-y: auto;">
+<div id='search_panel' class="css-search_div_panel">
 </div>
 
 <p>

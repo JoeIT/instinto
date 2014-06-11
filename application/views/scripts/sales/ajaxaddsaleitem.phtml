@@ -1,4 +1,4 @@
-<table id='' border='2' width='800px'>
+<table id='sale_table_<?php echo $this->row; ?>' class='css-sale_table'>
 	<tr>
 		<th rowspan='5' class='css-container_photo_sample'>
 		<?php
@@ -13,36 +13,67 @@
 		</th>
 		<th colspan='2'>CODIGO: <?php echo $this->item->getCode(); ?></th>
 		<th>
-			<select>
-				<option value=''>VENTA</option>
-				<option value=''>Prestamo</option>
-				<option value=''>Reserva</option>
-				<option value=''>CLARI</option>
-				<option value=''>Robado/Extraviado</option>
+			<select name='sale_type_<?php echo $this->row; ?>' class='sale_type' row='<?php echo $this->row; ?>'>
+				<?php foreach($this->salesType as $type) { ?>
+				<option value='<?php echo $type->getId(); ?>'><?php echo $type->getName(); ?></option>
+				<?php }?>
 			</select>
 		</th>
-		<th>Borrar</th>
+		<th><input type='button' class='delete_button' value='QUITAR ITEM' row='<?php echo $this->row; ?>' /></th>
 	</tr>
 	<tr>
-		<th>MARCA: <?php echo $this->item->getBrand()->getName(); ?></th>
-		<th>TIPO: <?php echo $this->item->getType()->getName(); ?></th>
-		<th>COLOR: <?php echo $this->item->getColor()->getName(); ?></th>
-		<th>TALLA: <?php echo $this->item->getSize()->getName(); ?></th>		
+		<td>MARCA: <?php echo $this->item->getBrand()->getName(); ?></td>
+		<td>TIPO: <?php echo $this->item->getType()->getName(); ?></td>
+		<td>COLOR: <?php echo $this->item->getColor()->getName(); ?></td>
+		<td>TALLA: <?php echo $this->item->getSize()->getName(); ?></td>		
 	</tr>
 	<tr>
-		<td>Cantidad: <input type='text' value='' class='css-input_number_form' /> / <?php echo '4'; ?></td>
-		<td colspan='2'>Precio unit: <input type='text' value='' class='css-input_number_form' /> - Bs. <?php echo $this->item->getPrice(); ?></td>
-		<td>Total a pagar: Bs. 135</td>
+		<td>Cantidad: <input type='text' 
+							id='sale_quantity_<?php echo $this->row; ?>' 
+							name='sale_quantity_<?php echo $this->row; ?>' 
+							value='1' 
+							class='sale_total_calculate sale_debt_calculate css-input_number_form' 
+							row='<?php echo $this->row; ?>' 
+							default_value ='0' 
+							type_validation = 'integer-positive' 
+						/> / <?php echo '4'; ?></td>
+		<td colspan='2'>
+			Precio unit: 
+			<input type='text' id='sale_unit_price_<?php echo $this->row; ?>' 
+					name='sale_unit_price_<?php echo $this->row; ?>' 
+					value='<?php echo $this->item->getPrice(); ?>' 
+					class='sale_total_calculate sale_debt_calculate css-input_number_form' 
+					row='<?php echo $this->row; ?>' 
+					default_value ='0' 
+					type_validation = 'number-positive'
+			/>
+			 - Bs. <?php echo $this->item->getPrice(); ?>
+		</td>
+		<td>TOTAL: Bs. <p id='sale_total_<?php echo $this->row; ?>'><?php echo $this->item->getPrice(); ?></p></td>
 		
 	</tr>
-	<tr>
-		<td colspan='2'>Nombre: <input type='text' value='' /></td>
-		<td>A cuenta: Bs.<input type='text' value='' class='css-input_number_form' /></td>
-		<td>Debe: Bs. 85</td>
+	<tr id='sale_reserved_<?php echo $this->row; ?>'>
+		<td colspan='2'>Nombre: <input type='text' 
+										id='sale_client_<?php echo $this->row; ?>' 
+										name='sale_client_<?php echo $this->row; ?>' 
+								/></td>
+		<td>A cuenta: Bs.<input type='text' 
+								id='sale_anticipated_payment_<?php echo $this->row; ?>' 
+								name='sale_anticipated_payment_<?php echo $this->row; ?>' 
+								value='0.00' 
+								class='sale_debt_calculate css-input_number_form' 
+								row='<?php echo $this->row; ?>' 
+								default_value ='0' 
+								type_validation = 'number-positive'
+						/></td>
+		<td>Debe: Bs. <p id='sale_debt_<?php echo $this->row; ?>'>0.00</p></td>
 	</tr>
 	<tr>
 		<td colspan='4'>
-			Observaciones: <textarea rows='3' cols='40'></textarea>
+			Observaciones: <textarea rows='3' 
+									cols='40' id='sale_observation_<?php echo $this->row; ?>' 
+									name='sale_observation_<?php echo $this->row; ?>'
+							></textarea>
 		</td>
 	</tr>
 </table>

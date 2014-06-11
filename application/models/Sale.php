@@ -19,14 +19,14 @@ class App_Model_Sale {
 	 * @var App_Model_Item
 	 *
 	 * @ManyToOne(targetEntity="App_Model_Item")
-	 * @JoinColumn(name="item_code", referencedColumnName="id")
+	 * @JoinColumn(name="item_id", referencedColumnName="id")
 	 */
-	protected $item_code;
+	protected $itemId;
 	
 	/**
 	 * @var datetime
 	 *
-	 * @Column(name="sale_date", type="datetime", nullable=true)
+	 * @Column(name="sale_date", type="datetime", nullable=false)
 	 */
 	protected $saleDate;
 	
@@ -38,6 +38,42 @@ class App_Model_Sale {
 	 */
 	protected $type;
 	
+	/**
+	 * @var decimal
+	 *
+	 * @Column(name="quantity", type="integer", nullable=false)
+	 */
+	protected $quantity;
+	
+	/**
+	 * @var decimal
+	 *
+	 * @Column(name="price", type="decimal", scale=2, nullable=false)
+	 */
+	protected $price;
+	
+	/**
+	 * @var string
+	 *
+	 * @Column(name="observation", type="text", nullable=true)
+	 */
+	protected $observation;
+	
+	/**
+	 * @var string
+	 *
+	 * @Column(name="client_name", type="string", length=50, nullable=true)
+	 */
+	protected $clientName;
+	
+	/**
+	 * @var decimal
+	 *
+	 * @Column(name="anticipated_payment", type="decimal", scale=2, nullable=true)
+	 */
+	protected $anticipatedPayment;
+	
+	
 	
 	public function getId() {
 		return $this->id;
@@ -45,6 +81,14 @@ class App_Model_Sale {
 
 	public function setId($id) {
 		$this->id = $id;
+	}
+	
+	public function getItemId() {
+		return $this->itemId;
+	}
+	
+	public function setItemId($itemId) {
+		$this->itemId = $itemId;
 	}
 	
 	public function getSaleDate() {
@@ -61,6 +105,46 @@ class App_Model_Sale {
 	
 	public function setType(App_Model_SaleType $type) {
 		$this->type = $type;
+	}
+	
+	public function getQuantity() {
+		return $this->quantity;
+	}
+	
+	public function setQuantity($quantity) {
+		$this->quantity = $quantity;
+	}
+	
+	public function getPrice() {
+		return $this->price;
+	}
+	
+	public function setPrice($price) {
+		$this->price = $price;
+	}
+	
+	public function getObservation() {
+		return $this->observation;
+	}
+	
+	public function setObservation($observation) {
+		$this->observation = $observation;
+	}
+	
+	public function getClientName() {
+		return $this->clientName;
+	}
+	
+	public function setClientName($clientName) {
+		$this->clientName = $clientName;
+	}
+	
+	public function getAnticipatedPayment() {
+		return $this->anticipatedPayment;
+	}
+	
+	public function setAnticipatedPayment($anticipatedPayment) {
+		$this->anticipatedPayment = $anticipatedPayment;
 	}
 
 	public function toArray() {

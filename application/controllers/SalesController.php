@@ -1,7 +1,16 @@
 <?php
 class SalesController extends Zend_Controller_Action {
 	
+	private $_saleDao;
+	private $_saleTypeDao;
+	
 	private $_itemDao;
+	private $_itemTypeDao;
+	private $_itemBrandDao;
+	private $_itemSizeDao;
+	private $_itemColorDao;
+	private $_itemOriginDao;
+	
 	private $_itemUtils;
 	
 	const PHOTO_ROOT_URL = "Photos/";
@@ -9,7 +18,10 @@ class SalesController extends Zend_Controller_Action {
 	public function init() {
 		$this->view->rootPath = $this->getFrontController()->getBaseUrl() . '/'; // /zf/public/
 		
-		$this->_itemDao = new App_Dao_ItemDao ();
+		$this->_saleDao = new App_Dao_SaleDao();
+		$this->_saleTypeDao = new App_Dao_SaleTypeDao();
+		
+		$this->_itemDao = new App_Dao_ItemDao();
 		$this->_itemTypeDao = new App_Dao_ItemTypeDao();
 		$this->_itemBrandDao = new App_Dao_ItemBrandDao();
 		$this->_itemSizeDao = new App_Dao_ItemSizeDao();
@@ -52,8 +64,11 @@ class SalesController extends Zend_Controller_Action {
 	
 	public function ajaxaddsaleitemAction() {
 		$this->_helper->layout->disableLayout();
-		$id = $this->_getParam('id', '');
-		$this->view->item = $this->_itemDao->getById($id);
+		$itemId = $this->_getParam('id', '');
+		$this->view->row = $this->_getParam('row', '');
+		
+		$this->view->item = $this->_itemDao->getById($itemId);
+		$this->view->salesType = $this->_saleTypeDao->getAll();
 		
 		$this->view->photosPath = self::PHOTO_ROOT_URL;
 	}	

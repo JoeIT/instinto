@@ -1,6 +1,6 @@
 <?php
 /**
- * ItemType
+ * SaleType
  *
  * @Entity
  * @Table(name="sale_type")
