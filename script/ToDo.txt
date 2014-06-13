@@ -1,3 +1,3 @@
 - Hacer que al registrar un item, compruebe si ya fue registrado su codigo (ej LX-123), si fuera asi,
 impedir que se cree uno nuevo.
-- 
+- Tratar de cambiar los links de buscar, agregar, editar y exportar a botones mas visibles.

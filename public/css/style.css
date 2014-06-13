@@ -13,10 +13,10 @@ a:link, a:visited {
 	text-decoration: none;
 	font-weight: bold;
 	/*text-shadow: 0.1em 0.05em 0.1em #DFAAA6;*/
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	/*text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;*/
 }
 
-a:active, a:hover {
+.css-links a:active, .css-links a:hover {
 	color: #AAC9DD;
 	text-decoration: underline;
 }
@@ -44,7 +44,7 @@ img {
 #before-header {
 	width: auto;
 	height: 50px;
-	/*background: url(../images/logo.jpg) repeat; */
+	/*background: url(../images/logo.jpg) no-repeat;*/
 	background: #640E0E;
 	border-top: 2px solid #ffffff;
 	border-bottom: 2px solid #ffffff;
@@ -100,32 +100,19 @@ img {
 }
 
 /* header */
-/*
+
 #header {
-	clear: both;
 	width: auto;
-	height: 285px;
-	padding: 0;
-	margin: 0;
-	background: url(../images/header_bg_blank.jpg) no-repeat;
+	height: 50px;
+	margin: 10px;
+	margin-left: 50px;
+	background: url(../images/logo.jpg) no-repeat;
 }
 
+/*
 #header a, a:hover {
 	color: #ffffff;
 }*/
-
-#header #main_logo {
-	margin-left: 100px;
-	margin-top: 20px;
-	float: left;
-	overflow: hidden;
-	width: auto;
-	text-align: center;
-}
-
-#header #main_logo img {
-	max-height: 200px;
-}
 
 /* end of header */
 
@@ -133,17 +120,16 @@ img {
 #content {
 	clear: both;
 	width: auto;
-	padding: 0 20px;	
+	padding: 0 20px;
 }
 
 #content #content_left {
 	float: left;
 	width: auto;
-	padding: 3px;
-	background-color: #171716;
-	border: 1px solid #212120;
+	padding: 10px;
+	background-color: #412326;
+	border: 2px solid #640E0E;
 }
-
 
 /* end of content */
 
@@ -170,51 +156,26 @@ img {
 /* end of footer */
 
 /************************************************/
-tr:nth-child(even) {
+.css-table_list {
+	font-size: x-small;
+}
+
+.css-table_list tr:nth-child(even) {
 	background-color: #640E0E;
 }
 
-th {
-	color: #640E0E;
-	text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
-	background: #FFCCCC;
-	border: 1px solid #640E0E;
-}
-
-h1, h2, h3 {
-	color: #640E0E;
-	text-shadow: -1px 0 white, 0 2px white, 2px 0 white, 0 -1px white;
+.css-table_list td {
+	padding: 2px;
 }
 
 .css-table-index td {
 	padding: 3px;
 }
 
-.css-table-item-index {
-	font-size: x-small;
-}
-
-.css-table-item-index td {
-	padding: 2px;
-}
-
 .css-table-index tr:hover :not(th)  
 {
 	background-color: #CC5850;
 	color: #F7F6C3;
-}
-
-.paginator_field {
-	background-color: #363333;
-}
-
-.css-input_text_form {
-	width: 250px;
-}
-
-.css-input_number_form {
-	width: 50px;
-	text-align: right;
 }
 
 .css-table-search {
@@ -229,6 +190,40 @@ h1, h2, h3 {
 .css-table-search td select {
 	width: 100%;
 	font-size: x-small;
+}
+
+.css-table_list th, .css-table-search th{
+	color: #640E0E;
+	text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+	background: #FFCCCC;
+	border: 1px solid #640E0E;
+}
+
+.css-sale_table {
+	width: 800px;
+	border:2px double white;
+	border-radius:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+}
+
+
+h1, h2, h3 {
+	color: #640E0E;
+	text-shadow: -1px 0 white, 0 2px white, 2px 0 white, 0 -1px white;
+}
+
+.paginator_field {
+	background-color: #363333;
+}
+
+.css-input_text_form {
+	width: 250px;
+}
+
+.css-input_number_form {
+	width: 50px;
+	text-align: right;
 }
 
 .css-container_notification {
@@ -251,19 +246,11 @@ h1, h2, h3 {
 }
 
 .css-search_div_panel {
-	width: 650px;
+	width: 600px;
 	height: 150px;
 	margin-left: auto;
 	margin-right: auto;
-	overflow-y: auto;	
-}
-
-.css-sale_table {
-	width: 800px;
-	border:2px double white;
-	border-radius:10px;
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
+	overflow-y: auto;
 }
 
 /* Don't erase this style, this belongs to htmlComponentValidator.js */
