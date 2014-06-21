@@ -7,8 +7,8 @@ function validateInputText( inputComponent )
 	var defaultValue = $(inputComponent).attr('default_value');
 	var css_error = 'css-input_text_error';
 	
-	if( defaultValue == '' )
-		defaultValue = 0;
+	if( defaultValue != '' )
+		
 		
 	var validations = typeValidation.split('-');
 	
@@ -19,7 +19,9 @@ function validateInputText( inputComponent )
 			case 'integer':
 				if( !isInteger( value ) )
 				{
-					$(inputComponent).val( defaultValue );
+					if( defaultValue != '' )
+						$(inputComponent).val( defaultValue );
+					
 					if( $(inputComponent).hasClass(css_error) == false )
 						$(inputComponent).toggleClass(css_error);
 				}
@@ -32,7 +34,9 @@ function validateInputText( inputComponent )
 			case 'positive':
 				if( !isPositive( value ) )
 				{
-					$(inputComponent).val( defaultValue );
+					if( defaultValue != '' )
+						$(inputComponent).val( defaultValue );
+					
 					if($(inputComponent).hasClass(css_error) == false )
 						$(inputComponent).toggleClass(css_error);
 					
@@ -44,7 +48,9 @@ function validateInputText( inputComponent )
 			case 'number':
 				if( !isNumber( value ) )
 				{
-					$(inputComponent).val( defaultValue );
+					if( defaultValue != '' )
+						$(inputComponent).val( defaultValue );
+					
 					if($(inputComponent).hasClass(css_error) == false )
 						$(inputComponent).toggleClass(css_error);
 					

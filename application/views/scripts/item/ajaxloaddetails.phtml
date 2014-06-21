@@ -1,6 +1,19 @@
 <tr id='row_<?php echo $this->rowNumber; ?>'>
 	<td><?php echo $this->colorSelect; ?></td>
 	<td><?php echo $this->sizeSelect; ?></td>
-	<td align='center'><input type='text' name='quantity_<?php echo $this->rowNumber; ?>' id='quantity_<?php echo $this->rowNumber; ?>' class='quantity_field css-input_number_form' value='0'/></td>
-	<td><input type='button' class='delete_features' row='<?php echo $this->rowNumber; ?>' value='Borrar'/></td>
+	<td align='center'>
+		<input type='text' 
+				name='quantity_<?php echo $this->rowNumber; ?>' 
+				id='quantity_<?php echo $this->rowNumber; ?>' 
+				class='quantity_field css-input_number_form' 
+				default_value ='1' 
+				type_validation = 'integer-positive'
+				value='0'/>
+	</td>
+	<td>
+		<input type='button' 
+				class='delete_features' 
+				row='<?php echo $this->rowNumber; ?>' 
+				value='Borrar'/>
+	</td>
 </tr>

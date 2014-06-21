@@ -14,7 +14,18 @@ $(document).ready(function() {
 
 	$('#sale_date').datepicker({
 		maxDate: 0,
-		showAnim: 'slide'
+		dateFormat: 'dd-mm-yy',
+		showAnim: 'slide',
+		showOn: 'button',
+		buttonImage: '../images/calendar.gif',
+		buttonImageOnly: true,
+		changeMonth: true,
+		changeYear: true,
+		onSelect: function(value, date)
+		{
+			$('#date_panel').html(' ' + value);
+			$('#sale_date').val(value);
+		} 
 	});
 
 	$(document).on('click', "a.item_to_sale", function () {
@@ -141,10 +152,14 @@ function loadResultsTable()
 
 </br>
 
-<h2>Compras:</h2>
-FECHA: <input id='sale_date' type='text' value='AQUI VA LA FECHA' />
-
+<div class='css-container_inline'>
+	<h2>Compras:</h2>
+	<h2 id='date_panel'> <?php echo Date('d-m-Y'); ?></h2>
+	<input id='sale_date' name='sale_date' type='hidden' readonly="readonly" value='' />
+</div>
 
 <div align='center' id='sales_tables'>  
 </div>
-
+<div align='center'>
+	<input type='button' value='ACEPTAR' />
+</div>

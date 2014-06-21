@@ -40,22 +40,30 @@ img {
 	background: #000000;
 }
 
-/* menu */
-#before-header {
+/* header */
+#header {
 	width: auto;
 	height: 50px;
-	/*background: url(../images/logo.jpg) no-repeat;*/
 	background: #640E0E;
-	border-top: 2px solid #ffffff;
-	border-bottom: 2px solid #ffffff;
-	border-right: 2px solid #ffffff;
-	border-left: 2px solid #ffffff;
+	border: 2px solid #ffffff;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 }
 
-#menu {
-	
+#logo {
+	margin: 10px;
+	width: 150px;
+	height: 50px;
+	background: url(../images/logo.jpg) no-repeat;
+	border: 5px solid #640E0E;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+/* end of header */
+
+/* menu */
+#menu {	
 }
 
 #menu ul {
@@ -99,23 +107,6 @@ img {
 	border-radius: 15px;
 }
 
-/* header */
-
-#header {
-	width: auto;
-	height: 50px;
-	margin: 10px;
-	margin-left: 50px;
-	background: url(../images/logo.jpg) no-repeat;
-}
-
-/*
-#header a, a:hover {
-	color: #ffffff;
-}*/
-
-/* end of header */
-
 /* content */
 #content {
 	clear: both;
@@ -139,10 +130,7 @@ img {
 	width: auto;
 	padding: 20px 0px 20px 0;
 	text-align: center;
-	border-top: 2px solid #ffffff;
-	border-bottom: 2px solid #ffffff;
-	border-left: 2px solid #ffffff;
-	border-right: 2px solid #ffffff;
+	border: 2px solid #ffffff;
 	color: #ffffff;
 	background-color: #640E0E;
 	-moz-border-radius: 10px;
@@ -207,10 +195,9 @@ img {
     -webkit-border-radius:10px;
 }
 
-
 h1, h2, h3 {
 	color: #640E0E;
-	text-shadow: -1px 0 white, 0 2px white, 2px 0 white, 0 -1px white;
+	text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }
 
 .paginator_field {
@@ -251,6 +238,10 @@ h1, h2, h3 {
 	margin-left: auto;
 	margin-right: auto;
 	overflow-y: auto;
+}
+
+.css-container_inline h2 {
+	display: inline-block;
 }
 
 /* Don't erase this style, this belongs to htmlComponentValidator.js */
