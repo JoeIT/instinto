@@ -11,7 +11,9 @@
 				echo "<img src='" . $this->rootPath . "/" . $files[0] . "'  />";			
 		?>
 		</th>
-		<th colspan='2'>CODIGO: <?php echo $this->item->getCode(); ?></th>
+		<th colspan='2'>CODIGO: <?php echo $this->item->getCode(); ?>
+			<input type='hidden' name='sale_id_<?php echo $this->row; ?>' value='<?php echo $this->item->getId(); ?>' />
+		</th>
 		<th>
 			<select name='sale_type_<?php echo $this->row; ?>' class='sale_type' row='<?php echo $this->row; ?>'>
 				<?php foreach($this->salesType as $type) { ?>

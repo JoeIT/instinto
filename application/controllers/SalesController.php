@@ -46,6 +46,30 @@ class SalesController extends Zend_Controller_Action {
 		$this->view->sizeSelect		= $this->_itemUtils->buildSelectFromArray( 'size_select_search', $this->_itemSizeDao->getAll(), $sizeSelected, 'search_component', true );
 		$this->view->colorSelect	= $this->_itemUtils->buildSelectFromArray( 'color_select_search', $this->_itemColorDao->getAll(), $colorSelected, 'search_component', true );
 		$this->view->originSelect	= $this->_itemUtils->buildSelectFromArray( 'origin_select_search', $this->_itemOriginDao->getAll(), $originSelected, 'search_component', true );
+		
+		if ($this->_request->getPost()) {
+			$rows = $this->_getParam('sale_index_row');
+			$saleDate = $this->_getParam('sale_date');
+
+			for($index = 0; $index <= $rows; $index++)
+			{
+				$id = $this->_getParam('sale_id_' . $index, '');
+				if(!empty($id))
+				{
+					echo "Saving: $id</br>";
+					// Sale saving data
+					echo $this->_getParam('sale_type_' . $index) . '</br>';
+					echo $this->_getParam('sale_quantity_' . $index) . '</br>';
+					echo $this->_getParam('sale_unit_price_' . $index) . '</br>';
+					echo $this->_getParam('sale_observation_' . $index) . '</br>';
+					
+					echo $this->_getParam('sale_client_' . $index) . '</br>';
+					echo $this->_getParam('sale_anticipated_payment_' . $index) . '</br>';
+					
+					echo '</br></br>';
+				}
+			}
+		}
 	}
 	
 	public function ajaxfinditemAction() {

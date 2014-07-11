@@ -14,7 +14,7 @@ $(document).ready(function() {
 
 	$('#sale_date').datepicker({
 		maxDate: 0,
-		dateFormat: 'dd-mm-yy',
+		dateFormat: 'dd-M-yy',
 		showAnim: 'slide',
 		showOn: 'button',
 		buttonImage: '../images/calendar.gif',
@@ -24,12 +24,19 @@ $(document).ready(function() {
 		onSelect: function(value, date)
 		{
 			$('#date_panel').html(' ' + value);
-			$('#sale_date').val(value);
+			//$('#sale_date').val(value);
+
+			var date = $(this).datepicker('getDate'),
+            day  = date.getDate(),  
+            month = date.getMonth() + 1,              
+            year =  date.getFullYear();
+			$('#sale_date').val(day + '-' + month + '-' + year);
 		} 
 	});
 
 	$(document).on('click', "a.item_to_sale", function () {
 		row = Number(row) + 1;
+		$('#sale_index_row').val(row);
 
 		$.ajax({
 	        url: rootPath + "sales/ajaxaddsaleitem",
@@ -152,14 +159,20 @@ function loadResultsTable()
 
 </br>
 
+<form action="" method="post" enctype="application/x-www-form-urlencoded">
+
 <div class='css-container_inline'>
 	<h2>Compras:</h2>
-	<h2 id='date_panel'> <?php echo Date('d-m-Y'); ?></h2>
-	<input id='sale_date' name='sale_date' type='hidden' readonly="readonly" value='' />
+	<h2 id='date_panel'> <?php echo Date('d-M-Y'); ?></h2>
+	<input id='sale_date' name='sale_date' type='hidden' readonly="readonly" value='<?php echo Date('d-m-Y'); ?>' />
 </div>
 
-<div align='center' id='sales_tables'>  
-</div>
+<div align='center' id='sales_tables'></div>
+
+<input type='hidden' name='sale_index_row' id='sale_index_row' value='-1' />
+
 <div align='center'>
-	<input type='button' value='ACEPTAR' />
+	<input type='submit' value='ACEPTAR' />
 </div>
+
+</form>
